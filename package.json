@@ -1,15 +1,12 @@
 {
-  "name": "YolHireBot",
+  "name": "ZapchastiBot",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
+  "description": "Telegram bot",
+  "main": "bot.js",
   "author": "Terekhov Vyacheslav",
   "license": "ISC",
   "dependencies": {
     "telegraf": "^4.4.1"
-  }
+  },
+  "devDependencies": {}
 }
