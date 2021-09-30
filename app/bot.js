@@ -12,21 +12,19 @@ const {
   andreyChatId,
 } = require("../botData/botData");
 const { actionsNames, orderKeys } = require("../texts/names");
-const { botState, resetStateToDefault } = require("../store/store");
+const { botState } = require("../store/store");
 
 const selectOrdersCountScene = new BaseScene("selectOrdersCountScene");
 selectOrdersCountScene.enter(async (ctx) => {
-  resetStateToDefault();
-  console.log(botState);
+  ctx.session.state = { ...botState };
 
-  botState.userName =
+  ctx.session.state.userName =
     ctx.chat.first_name !== undefined ? ctx.chat.first_name : "";
-  botState.userSurname =
+  ctx.session.state.userSurname =
     ctx.chat.last_name !== undefined ? ctx.chat.last_name : "";
-  bot;
-  botState.userNickname =
+  ctx.session.state.userNickname =
     ctx.chat.username !== undefined ? ctx.chat.username : "";
-  botState.userChatId = ctx.chat.id;
+  ctx.session.state.userChatId = ctx.chat.id;
 
   const userName =
     ctx.message.from.first_name.length > 0
@@ -43,7 +41,7 @@ selectOrdersCountScene.enter(async (ctx) => {
 
 const multipleOrdersNoteScene = new BaseScene("multipleOrdersNoteScene");
 multipleOrdersNoteScene.enter(async (ctx) => {
-  botState.isMultipleOrder = true;
+  ctx.session.state.isMultipleOrder = true;
 
   return ctx.reply(
     actionsNames.fewPartsNote,
@@ -78,7 +76,7 @@ addPhotoDescriptionToOrderScene.on("photo", async (ctx) => {
   const largePhotoID = ctx.message.photo[ctx.message.photo.length - 1].file_id;
   const fileData = await bot.telegram.getFileLink(largePhotoID);
 
-  botState.orderPhotoUrl = fileData.href;
+  ctx.session.state.orderPhotoUrl = fileData.href;
 
   return ctx.scene.enter("selectDeliveryTypeScene");
 });
@@ -90,7 +88,7 @@ addTextDescriptionToOrderScene.enter((ctx) =>
   ctx.reply(actionsNames.addTextDescriptionNote)
 );
 addTextDescriptionToOrderScene.on("text", async (ctx) => {
-  botState.orderTextDescription = ctx.message.text;
+  ctx.session.state.orderTextDescription = ctx.message.text;
 
   return ctx.scene.enter("selectDeliveryTypeScene");
 });
@@ -114,7 +112,7 @@ addDeliveryAddressScene.enter((ctx) =>
   ctx.reply(actionsNames.deliveryAddressNote)
 );
 addDeliveryAddressScene.on("text", async (ctx) => {
-  botState.deliveryAddress = ctx.message.text;
+  ctx.session.state.deliveryAddress = ctx.message.text;
 
   return ctx.scene.enter("addAutoInfoScene");
 });
@@ -141,7 +139,7 @@ addAutoDocPhotoScene.on("photo", async (ctx) => {
   const largePhotoID = ctx.message.photo[ctx.message.photo.length - 1].file_id;
   const fileData = await bot.telegram.getFileLink(largePhotoID);
 
-  botState.autoDocPhotoUrl = fileData.href;
+  ctx.session.state.autoDocPhotoUrl = fileData.href;
 
   return ctx.scene.enter("selectPartsQualityScene");
 });
@@ -151,7 +149,7 @@ addAutoVinNumberScene.enter((ctx) =>
   ctx.reply(actionsNames.addAutoVinNumberNote)
 );
 addAutoVinNumberScene.on("text", async (ctx) => {
-  botState.autoVinNumber = ctx.message.text;
+  ctx.session.state.autoVinNumber = ctx.message.text;
 
   return ctx.scene.enter("selectPartsQualityScene");
 });
@@ -161,7 +159,7 @@ addAutoParamsScene.enter((ctx) =>
   ctx.reply(actionsNames.addAutoDescriptionNote)
 );
 addAutoParamsScene.on("text", async (ctx) => {
-  botState.autoParams = ctx.message.text;
+  ctx.session.state.autoParams = ctx.message.text;
 
   return ctx.scene.enter("selectPartsQualityScene");
 });
@@ -196,6 +194,7 @@ selectOrderUrgencyScene.enter((ctx) => {
 const createOrderScene = new BaseScene("createOrderScene");
 createOrderScene.enter(async (ctx) => {
   await ctx.reply(actionsNames.fullOrderDataNote);
+  Markup.removeKeyboard();
 
   const chatIds = [slavaChatId];
 
@@ -204,63 +203,63 @@ createOrderScene.enter(async (ctx) => {
     await ctx.telegram.sendMessage(
       id,
       orderKeys.userInfoText(
-        botState.userName,
-        botState.userNickname,
-        botState.userChatId
+        ctx.session.state.userName,
+        ctx.session.state.userNickname,
+        ctx.session.state.userChatId
       )
     );
 
-    if (botState.orderPhotoUrl.length > 0) {
+    if (ctx.session.state.orderPhotoUrl.length > 0) {
       await ctx.telegram.sendMessage(
         id,
-        orderKeys.orderPhotoText(botState.orderPhotoUrl)
+        orderKeys.orderPhotoText(ctx.session.state.orderPhotoUrl)
       );
     }
 
-    if (botState.orderTextDescription.length > 0) {
+    if (ctx.session.state.orderTextDescription.length > 0) {
       await ctx.telegram.sendMessage(
         id,
-        orderKeys.orderDescriptionText(botState.orderTextDescription)
+        orderKeys.orderDescriptionText(ctx.session.state.orderTextDescription)
       );
     }
 
     await ctx.telegram.sendMessage(
       id,
       orderKeys.orderDeliveryText(
-        botState.deliveryType,
-        botState.deliveryAddress
+        ctx.session.state.deliveryType,
+        ctx.session.state.deliveryAddress
       )
     );
 
-    if (botState.autoDocPhotoUrl.length > 0) {
+    if (ctx.session.state.autoDocPhotoUrl.length > 0) {
       await ctx.telegram.sendMessage(
         id,
-        orderKeys.orderCarDocPhotoText(botState.autoDocPhotoUrl)
+        orderKeys.orderCarDocPhotoText(ctx.session.state.autoDocPhotoUrl)
       );
     }
 
-    if (botState.autoVinNumber.length > 0) {
+    if (ctx.session.state.autoVinNumber.length > 0) {
       await ctx.telegram.sendMessage(
         id,
-        orderKeys.orderCarVinNumberText(botState.autoVinNumber)
+        orderKeys.orderCarVinNumberText(ctx.session.state.autoVinNumber)
       );
     }
 
-    if (botState.autoParams.length > 0) {
+    if (ctx.session.state.autoParams.length > 0) {
       await ctx.telegram.sendMessage(
         id,
-        orderKeys.orderCarParamsText(botState.autoParams)
+        orderKeys.orderCarParamsText(ctx.session.state.autoParams)
       );
     }
 
     await ctx.telegram.sendMessage(
       id,
-      orderKeys.orderPartsQualityText(botState.partsQuality)
+      orderKeys.orderPartsQualityText(ctx.session.state.partsQuality)
     );
 
     await ctx.telegram.sendMessage(
       id,
-      orderKeys.orderUrgencyText(botState.orderUrgency)
+      orderKeys.orderUrgencyText(ctx.session.state.orderUrgency)
     );
   }
 
@@ -298,15 +297,15 @@ stage.hears(actionsNames.addTextDescription, (ctx) =>
   ctx.scene.enter("addTextDescriptionToOrderScene")
 );
 stage.hears(actionsNames.selfOrderPickUp, (ctx) => {
-  botState.deliveryType = actionsNames.selfOrderPickUp;
+  ctx.session.state.deliveryType = actionsNames.selfOrderPickUp;
   ctx.scene.enter("addAutoInfoScene");
 });
 stage.hears(actionsNames.pointOrderPickUp, (ctx) => {
-  botState.deliveryType = actionsNames.pointOrderPickUp;
+  ctx.session.state.deliveryType = actionsNames.pointOrderPickUp;
   ctx.scene.enter("addAutoInfoScene");
 });
 stage.hears(actionsNames.orderWithDelivery, (ctx) => {
-  botState.deliveryType = actionsNames.orderWithDelivery;
+  ctx.session.state.deliveryType = actionsNames.orderWithDelivery;
   ctx.scene.enter("addDeliveryAddressScene");
 });
 stage.hears(actionsNames.addAutoDocPhotoTitle, (ctx) =>
@@ -319,23 +318,23 @@ stage.hears(actionsNames.addAutoDescriptionTitle, (ctx) =>
   ctx.scene.enter("addAutoParamsScene")
 );
 stage.hears(actionsNames.originalPartsQuality, (ctx) => {
-  botState.partsQuality = actionsNames.originalPartsQuality;
+  ctx.session.state.partsQuality = actionsNames.originalPartsQuality;
   ctx.scene.enter("selectOrderUrgencyScene");
 });
 stage.hears(actionsNames.cheapPartsQuality, (ctx) => {
-  botState.partsQuality = actionsNames.cheapPartsQuality;
+  ctx.session.state.partsQuality = actionsNames.cheapPartsQuality;
   ctx.scene.enter("selectOrderUrgencyScene");
 });
 stage.hears(actionsNames.goodPartsQuality, (ctx) => {
-  botState.partsQuality = actionsNames.goodPartsQuality;
+  ctx.session.state.partsQuality = actionsNames.goodPartsQuality;
   ctx.scene.enter("selectOrderUrgencyScene");
 });
 stage.hears(actionsNames.lowUrgensyOrder, (ctx) => {
-  botState.orderUrgency = actionsNames.lowUrgensyOrder;
+  ctx.session.state.orderUrgency = actionsNames.lowUrgensyOrder;
   ctx.scene.enter("createOrderScene");
 });
 stage.hears(actionsNames.highUrgencyOrder, (ctx) => {
-  botState.orderUrgency = actionsNames.highUrgencyOrder;
+  ctx.session.state.orderUrgency = actionsNames.highUrgencyOrder;
   ctx.scene.enter("createOrderScene");
 });
 
