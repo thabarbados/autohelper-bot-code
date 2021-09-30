@@ -42,15 +42,14 @@ exports.actionsNames = {
 };
 
 exports.orderKeys = {
-  newOrderText: "❗❗❗ Внимание, поступил новый заказ ❗❗❗",
+  newOrderBorderLine: "🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗",
+  newOrderText: "Внимание, поступил новый заказ",
   userInfoText: function (name, userName, chatId) {
     return `Заказ сделал ${
       name.length > 0 ? name : "пользователь"
     }, его аккаунт в телеграме: @${userName}, id чата: ${chatId}`;
   },
-  orderPhotoText: function (url) {
-    return `Заказчик добавил фото запчасти: ${url}`;
-  },
+  orderPhotoText: 'Заказчик добавил фото запчасти:',
   orderDescriptionText: function (description) {
     return `Заказчик добавил описание запчасти: ${description}`;
   },
@@ -61,9 +60,7 @@ exports.orderKeys = {
         : ""
     }`;
   },
-  orderCarDocPhotoText: function (url) {
-    return `Фотография ПТС автомобиля: ${url}`;
-  },
+  orderCarDocPhotoText: 'Фотография ПТС автомобиля:',
   orderCarVinNumberText: function (vin) {
     return `VIN номер автомобиля: ${vin}`;
   },

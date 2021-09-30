@@ -199,6 +199,7 @@ createOrderScene.enter(async (ctx) => {
   const chatIds = [slavaChatId];
 
   for (const id of chatIds) {
+    await ctx.telegram.sendMessage(id, orderKeys.newOrderBorderLine);
     await ctx.telegram.sendMessage(id, orderKeys.newOrderText);
     await ctx.telegram.sendMessage(
       id,
@@ -210,10 +211,10 @@ createOrderScene.enter(async (ctx) => {
     );
 
     if (ctx.session.state.orderPhotoUrl.length > 0) {
-      await ctx.telegram.sendMessage(
-        id,
-        orderKeys.orderPhotoText(ctx.session.state.orderPhotoUrl)
-      );
+      await ctx.telegram.sendMessage(id, orderKeys.orderPhotoText);
+      await ctx.telegram.sendPhoto(id, {
+        url: ctx.session.state.orderPhotoUrl,
+      });
     }
 
     if (ctx.session.state.orderTextDescription.length > 0) {
@@ -232,10 +233,10 @@ createOrderScene.enter(async (ctx) => {
     );
 
     if (ctx.session.state.autoDocPhotoUrl.length > 0) {
-      await ctx.telegram.sendMessage(
-        id,
-        orderKeys.orderCarDocPhotoText(ctx.session.state.autoDocPhotoUrl)
-      );
+      await ctx.telegram.sendMessage(id, orderKeys.orderCarDocPhotoText);
+      await ctx.telegram.sendPhoto(id, {
+        url: ctx.session.state.autoDocPhotoUrl,
+      });
     }
 
     if (ctx.session.state.autoVinNumber.length > 0) {
