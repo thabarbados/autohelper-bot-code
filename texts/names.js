@@ -1,4 +1,4 @@
-exports.actionsNames = {
+const actionsNames = {
   welcomeString: function (name) {
     return `Привет ${name}! С моей помощью ты можешь найти любую запчасть в Новосибирске. Тебе нужна одна запчасть или несколько?`;
   },
@@ -41,36 +41,46 @@ exports.actionsNames = {
     "Ваша заявка запущена в работу. Я свяжусь с вами при получении новой информации",
 };
 
-exports.orderKeys = {
-  newOrderBorderLine: "🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗",
-  newOrderText: "Внимание, поступил новый заказ",
-  userInfoText: function (name, userName, chatId) {
-    return `Заказ сделал ${
-      name.length > 0 ? name : "пользователь"
-    }, его аккаунт в телеграме: @${userName}, id чата: ${chatId}`;
-  },
-  orderPhotoText: 'Заказчик добавил фото запчасти:',
-  orderDescriptionText: function (description) {
-    return `Заказчик добавил описание запчасти: ${description}`;
-  },
-  orderDeliveryText: function (type, address) {
-    return `Выбран тип доставки: ${type}.${
-      address.length > 0
-        ? ` Доставку нужно осуществить по адресу: ${address}`
-        : ""
-    }`;
-  },
-  orderCarDocPhotoText: 'Фотография ПТС автомобиля:',
-  orderCarVinNumberText: function (vin) {
-    return `VIN номер автомобиля: ${vin}`;
-  },
-  orderCarParamsText: function (params) {
-    return `Дополнительная информация о автомобиле: ${params}`;
-  },
-  orderPartsQualityText: function (quality) {
-    return `Выбрано качество запчасти: ${quality}`;
-  },
-  orderUrgencyText: function (urgency) {
-    return `Срочность заказа: ${urgency}`;
-  },
+const orderKeys = {
+  orderPhotoText: "Фото запчасти",
+  orderCarDocPhotoText: "Фото ПТС автомобиля",
 };
+
+function getOrderText(state) {
+  const {
+    userName,
+    userNickname,
+    userChatId,
+    orderTextDescription,
+    deliveryType,
+    deliveryAddress,
+    autoVinNumber,
+    autoParams,
+    partsQuality,
+    orderUrgency,
+  } = state;
+
+  return `🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗\n<strong>Внимание, поступил новый заказ.</strong>\n<strong>Заказ сделал</strong> ${
+    userName.length > 0 ? userName : "пользователь"
+  }${
+    userNickname.length > 0 ? `, его аккаунт в телеграме: @${userNickname}.` : ""
+  }\n<strong>ID чата</strong>: ${userChatId}.\n${
+    orderTextDescription.length > 0
+      ? `<strong>Заказчик добавил описание запчасти</strong>: ${orderTextDescription}.\n`
+      : ""
+  }${`<strong>Выбран тип доставки</strong>: ${deliveryType}. ${
+    deliveryAddress.length > 0
+      ? `Доставку нужно осуществить по адресу: ${deliveryAddress}`
+      : ""
+  }`}\n${
+    autoVinNumber.length > 0
+      ? `<strong>VIN номер автомобиля</strong>: ${autoVinNumber}.\n`
+      : ""
+  }${
+    autoParams.length > 0
+      ? `<strong>Дополнительная информация о автомобиле</strong>: ${autoParams}.\n`
+      : ""
+  }<strong>Выбрано качество запчасти</strong>: ${partsQuality}.\n<strong>Срочность заказа</strong>: ${orderUrgency}.`;
+}
+
+module.exports = { actionsNames, orderKeys, getOrderText };

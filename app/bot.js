@@ -11,7 +11,7 @@ const {
   artemChatId,
   andreyChatId,
 } = require("../botData/botData");
-const { actionsNames, orderKeys } = require("../texts/names");
+const { actionsNames, orderKeys, getOrderText } = require("../texts/names");
 const { botState } = require("../store/store");
 
 const selectOrdersCountScene = new BaseScene("selectOrdersCountScene");
@@ -198,70 +198,32 @@ createOrderScene.enter(async (ctx) => {
 
   const chatIds = [slavaChatId];
 
+  const orderMessage = getOrderText(ctx.session.state);
+
   for (const id of chatIds) {
-    await ctx.telegram.sendMessage(id, orderKeys.newOrderBorderLine);
-    await ctx.telegram.sendMessage(id, orderKeys.newOrderText);
-    await ctx.telegram.sendMessage(
-      id,
-      orderKeys.userInfoText(
-        ctx.session.state.userName,
-        ctx.session.state.userNickname,
-        ctx.session.state.userChatId
-      )
-    );
+    await ctx.telegram.sendMessage(id, orderMessage, { parse_mode: "HTML" });
 
     if (ctx.session.state.orderPhotoUrl.length > 0) {
-      await ctx.telegram.sendMessage(id, orderKeys.orderPhotoText);
-      await ctx.telegram.sendPhoto(id, {
-        url: ctx.session.state.orderPhotoUrl,
-      });
-    }
-
-    if (ctx.session.state.orderTextDescription.length > 0) {
-      await ctx.telegram.sendMessage(
+      await ctx.telegram.sendPhoto(
         id,
-        orderKeys.orderDescriptionText(ctx.session.state.orderTextDescription)
+        {
+          url: ctx.session.state.orderPhotoUrl,
+        },
+        { caption: orderKeys.orderPhotoText }
       );
     }
-
-    await ctx.telegram.sendMessage(
-      id,
-      orderKeys.orderDeliveryText(
-        ctx.session.state.deliveryType,
-        ctx.session.state.deliveryAddress
-      )
-    );
 
     if (ctx.session.state.autoDocPhotoUrl.length > 0) {
-      await ctx.telegram.sendMessage(id, orderKeys.orderCarDocPhotoText);
-      await ctx.telegram.sendPhoto(id, {
-        url: ctx.session.state.autoDocPhotoUrl,
-      });
-    }
-
-    if (ctx.session.state.autoVinNumber.length > 0) {
-      await ctx.telegram.sendMessage(
+      await ctx.telegram.sendPhoto(
         id,
-        orderKeys.orderCarVinNumberText(ctx.session.state.autoVinNumber)
+        {
+          url: ctx.session.state.autoDocPhotoUrl,
+        },
+        {
+          caption: orderKeys.orderCarDocPhotoText,
+        }
       );
     }
-
-    if (ctx.session.state.autoParams.length > 0) {
-      await ctx.telegram.sendMessage(
-        id,
-        orderKeys.orderCarParamsText(ctx.session.state.autoParams)
-      );
-    }
-
-    await ctx.telegram.sendMessage(
-      id,
-      orderKeys.orderPartsQualityText(ctx.session.state.partsQuality)
-    );
-
-    await ctx.telegram.sendMessage(
-      id,
-      orderKeys.orderUrgencyText(ctx.session.state.orderUrgency)
-    );
   }
 
   return;
