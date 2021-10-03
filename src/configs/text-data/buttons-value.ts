@@ -1,0 +1,18 @@
+export const buttonsValue = Object.freeze({
+  singleOrder: 'Хочу заказать одну запчасть.',
+  multipleOrders: 'Мне нужно несколько запчастей.',
+  multipleOrdersHint: 'Понятно!',
+  addPhotoDescription: 'Добавить фото:',
+  addTextDescription: 'Добавить описание:',
+  selfOrderPickUp: 'Соберу у поставщиков по городу',
+  pointOrderPickUp: 'Заберу готовый заказ в точке выдачи',
+  orderWithDelivery: 'Нужна доставка',
+  addAutoDocPhotoTitle: 'Добавить фото ПТС',
+  addAutoVinNumberTitle: 'Добавить VIN номер',
+  addAutoDescriptionTitle: 'Добавить дополнительные параметры',
+  originalPartsQuality: 'Только оригинал',
+  cheapPartsQuality: 'Чем дешевле, тем лучше',
+  goodPartsQuality: 'Лучшее соотношение цены и качества',
+  lowUrgensyOrder: 'Запчасти из наличия',
+  highUrgencyOrder: 'Готов подождать',
+});

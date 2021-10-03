@@ -1,3 +1,5 @@
+import { Context, Scenes } from "telegraf";
+
 export interface IBotState {
   isMultipleOrder: boolean;
   userName: string;
@@ -15,19 +17,11 @@ export interface IBotState {
   orderUrgency: string;
 }
 
-export const botState: IBotState = {
-  isMultipleOrder: false,
-  userName: '',
-  userSurname: '',
-  userNickname: '',
-  userChatId: 0,
-  orderPhotoUrl: '',
-  orderTextDescription: '',
-  deliveryType: '',
-  deliveryAddress: '',
-  autoDocPhotoUrl: '',
-  autoVinNumber: '',
-  autoParams: '',
-  partsQuality: '',
-  orderUrgency: '',
-};
+export interface IBotSession extends Scenes.SceneSession {
+  state: IBotState;
+}
+
+export interface IBotContext extends Context {
+  session: IBotSession;
+  scene: Scenes.SceneContextScene<IBotContext>;
+}

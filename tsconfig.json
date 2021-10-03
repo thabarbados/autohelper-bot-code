@@ -20,9 +20,6 @@
     }
   },
   "include": [
-    "app/bot.ts",
-    "botData/botData.ts",
-    "store/store.ts",
-    "texts/names.ts",
+    "src/**/*.ts",
   ]
 }

@@ -1,12 +1,12 @@
 {
-  "name": "ZapchastiBot",
+  "name": "zapchasti-bot",
   "version": "1.0.0",
   "description": "Telegram bot",
-  "main": "bot.js",
+  "main": "src/bot.ts",
   "author": "Terekhov Vyacheslav",
   "license": "ISC",
   "scripts": {
-    "start": "ts-node ./app/bot.ts"
+    "dev": "ts-node ./src/bot.ts"
 },
   "dependencies": {
     "telegraf": "^4.4.1"
