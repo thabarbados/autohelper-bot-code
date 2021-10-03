@@ -1,4 +1,4 @@
-import { IBotState } from '../../domain/types/types';
+import { IBotState } from '@src/domain/types/types';
 
 export const botState: IBotState = {
   isMultipleOrder: false,

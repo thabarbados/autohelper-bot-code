@@ -1,8 +1,8 @@
 import { Telegraf, session } from 'telegraf';
 
-import { stage } from './scenes';
-import { BOT_TOKEN } from './configs';
-import { IBotContext } from './domain';
+import { stage } from '@src/scenes';
+import { BOT_TOKEN } from '@src/configs';
+import { IBotContext } from '@src/domain';
 
 const bot = new Telegraf<IBotContext>(BOT_TOKEN);
 bot.use(session());

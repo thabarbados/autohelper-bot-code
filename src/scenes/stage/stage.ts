@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 
-import { IBotContext } from '../../domain';
-import { ScenesNames, buttonsValue } from '../../configs';
+import { IBotContext } from '@src/domain';
+import { ScenesNames, buttonsValue } from '@src/configs';
 
 import {
   chooseOrdersCountScene,

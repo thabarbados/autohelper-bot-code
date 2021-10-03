@@ -1,4 +1,4 @@
-import { IBotState } from '../../domain';
+import { IBotState } from '@src/domain';
 
 export const getOrderText = (state: IBotState) => {
   const {

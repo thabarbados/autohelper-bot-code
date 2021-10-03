@@ -1,8 +1,8 @@
 import { Markup, Scenes } from 'telegraf';
-import { handleUnexpectedText } from '../helpers/handle-text-helper';
 
-import { botTexts, buttonsValue, ScenesNames } from '../../configs';
-import { IBotContext } from '../../domain';
+import { handleUnexpectedText } from '@src/scenes';
+import { botTexts, buttonsValue, ScenesNames } from '@src/configs';
+import { IBotContext } from '@src/domain';
 
 export const multipleOrdersNoticeScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.MultipleOrdersNotice

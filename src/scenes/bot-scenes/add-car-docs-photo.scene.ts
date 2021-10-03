@@ -1,9 +1,9 @@
 import { Scenes } from 'telegraf';
 
-import { botTexts, ScenesNames } from '../../configs';
-import { IBotContext } from '../../domain';
-import { getFileLink } from '../../bot';
-import { handleUnexpectedText } from '../helpers/handle-text-helper';
+import { botTexts, ScenesNames } from '@src/configs';
+import { IBotContext } from '@src/domain';
+import { getFileLink } from '@src/bot';
+import { handleUnexpectedText } from '@src/scenes';
 
 export const addCarDocsPhotoScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.AddCarDocsPhoto

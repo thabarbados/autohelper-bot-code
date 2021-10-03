@@ -1,7 +1,7 @@
 import { Scenes } from 'telegraf';
 
-import { botTexts, ScenesNames } from '../../configs';
-import { IBotContext } from '../../domain';
+import { botTexts, ScenesNames } from '@src/configs';
+import { IBotContext } from '@src/domain';
 
 export const addCarVinNumberScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.AddCarVinNumber

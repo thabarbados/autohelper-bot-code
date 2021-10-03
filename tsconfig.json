@@ -7,7 +7,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "resolveJsonModule": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -15,11 +15,10 @@
       "es2017"
     ],
     "paths": {
-      "*": [
-        "node_modules/*",
-        "src/types/*"
+      "@src/*": [
+        "./src/*"
       ]
-    }
+    },
   },
   "include": [
     "src/**/*.ts",

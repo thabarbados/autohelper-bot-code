@@ -1,5 +1,5 @@
-import { IBotContext } from '../../domain';
-import { botTexts } from '../../configs';
+import { IBotContext } from '@src/domain';
+import { botTexts } from '@src/configs';
 
 export const handleUnexpectedText = (ctx: IBotContext) =>
   ctx.reply(botTexts.unexpectedTextNote);

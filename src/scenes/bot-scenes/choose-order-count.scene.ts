@@ -1,9 +1,9 @@
 import { Markup, Scenes } from 'telegraf';
 
-import { botState } from '../../store';
-import { botTexts, buttonsValue, ScenesNames } from '../../configs';
-import { IBotContext } from '../../domain';
-import { handleUnexpectedText } from '../helpers/handle-text-helper';
+import { botState } from '@src/store';
+import { botTexts, buttonsValue, ScenesNames } from '@src/configs';
+import { IBotContext } from '@src/domain';
+import { handleUnexpectedText } from '@src/scenes';
 
 export const chooseOrdersCountScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.ChooseOrderCount
