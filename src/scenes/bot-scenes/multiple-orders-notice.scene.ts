@@ -1,4 +1,5 @@
 import { Markup, Scenes } from 'telegraf';
+import { handleUnexpectedText } from '../helpers/handle-text-helper';
 
 import { botTexts, buttonsValue, ScenesNames } from '../../configs';
 import { IBotContext } from '../../domain';
@@ -17,3 +18,7 @@ multipleOrdersNoticeScene.enter(async (ctx: IBotContext) => {
       .resize()
   );
 });
+
+multipleOrdersNoticeScene.on('text', (ctx: IBotContext) =>
+  handleUnexpectedText(ctx)
+);

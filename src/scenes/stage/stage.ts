@@ -43,7 +43,6 @@ stage.hears(buttonsValue.multipleOrdersBtn, (ctx: IBotContext) =>
 
 stage.hears(
   [buttonsValue.singleOrderBtn, buttonsValue.multipleOrdersOKBtn],
-
   (ctx: IBotContext) => ctx.scene.enter(ScenesNames.ChooseOrderDescriptionType)
 );
 

@@ -1,4 +1,4 @@
-import { Markup, Scenes } from 'telegraf';
+import { Scenes } from 'telegraf';
 
 import { botTexts, ScenesNames } from '../../configs';
 import { IBotContext } from '../../domain';

@@ -3,6 +3,7 @@ import { Markup, Scenes } from 'telegraf';
 import { botState } from '../../store';
 import { botTexts, buttonsValue, ScenesNames } from '../../configs';
 import { IBotContext } from '../../domain';
+import { handleUnexpectedText } from '../helpers/handle-text-helper';
 
 export const chooseOrdersCountScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.ChooseOrderCount
@@ -39,8 +40,15 @@ chooseOrdersCountScene.enter(async (ctx: IBotContext) => {
 
   return await ctx.reply(
     botTexts.welcomeMessage(userName),
-    Markup.keyboard([[buttonsValue.singleOrderBtn], [buttonsValue.multipleOrdersBtn]])
+    Markup.keyboard([
+      [buttonsValue.singleOrderBtn],
+      [buttonsValue.multipleOrdersBtn],
+    ])
       .oneTime()
       .resize()
   );
 });
+
+chooseOrdersCountScene.on('text', (ctx: IBotContext) =>
+  handleUnexpectedText(ctx)
+);

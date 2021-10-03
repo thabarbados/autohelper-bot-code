@@ -1,6 +1,6 @@
 import { IBotState } from '../../domain';
 
-export function getOrderText(state: IBotState) {
+export const getOrderText = (state: IBotState) => {
   const {
     userName,
     userNickname,
@@ -37,4 +37,4 @@ export function getOrderText(state: IBotState) {
       ? `<strong>Дополнительная информация о автомобиле</strong>: ${autoParams}.\n`
       : ''
   }<strong>Качество запчасти</strong>: ${partsQuality}.\n<strong>Срочность заказа</strong>: ${orderUrgency}.`;
-}
+};

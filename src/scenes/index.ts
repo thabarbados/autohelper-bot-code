@@ -13,3 +13,4 @@ export * from './bot-scenes/choose-order-quality.scene';
 export * from './bot-scenes/choose-order-urgency.scene';
 export * from './bot-scenes/create-order.scene';
 export * from './stage/stage';
+export * from './helpers/handle-text-helper';

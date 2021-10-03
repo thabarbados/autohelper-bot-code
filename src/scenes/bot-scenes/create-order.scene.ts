@@ -1,4 +1,4 @@
-import { Markup, Scenes } from 'telegraf';
+import { Scenes } from 'telegraf';
 
 import { botTexts, ScenesNames, VT_CHAT_ID } from '../../configs';
 import { IBotContext } from '../../domain';
@@ -10,8 +10,6 @@ export const createOrderScene = new Scenes.BaseScene<IBotContext>(
 
 createOrderScene.enter(async (ctx: IBotContext) => {
   await ctx.reply(botTexts.createOrderNotice);
-
-  Markup.removeKeyboard();
 
   const chatIds = [VT_CHAT_ID];
 

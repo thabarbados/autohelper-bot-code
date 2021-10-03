@@ -1,4 +1,5 @@
 import { Markup, Scenes } from 'telegraf';
+import { handleUnexpectedText } from '../helpers/handle-text-helper';
 
 import { botTexts, buttonsValue, ScenesNames } from '../../configs';
 import { IBotContext } from '../../domain';
@@ -19,3 +20,7 @@ chooseOrderQualityScene.enter((ctx: IBotContext) => {
       .resize()
   );
 });
+
+chooseOrderQualityScene.on('text', (ctx: IBotContext) =>
+  handleUnexpectedText(ctx)
+);

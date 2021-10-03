@@ -25,4 +25,5 @@ export const botTexts = Object.freeze({
     'Заявка запущена в работу. Я свяжусь с тобой после подбора или для уточнения деталей.',
   orderPhotoCaption: 'Фото запчасти',
   orderCarDocsPhotoCaption: 'Фото ПТС автомобиля',
+  unexpectedTextNote: 'Сейчас не нужно ничего вводить, выбери подходящий вариант из кнопок ниже.',
 });

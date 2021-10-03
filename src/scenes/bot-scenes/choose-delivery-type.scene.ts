@@ -1,4 +1,5 @@
 import { Markup, Scenes } from 'telegraf';
+import { handleUnexpectedText } from '../helpers/handle-text-helper';
 
 import { botTexts, buttonsValue, ScenesNames } from '../../configs';
 import { IBotContext } from '../../domain';
@@ -18,3 +19,7 @@ chooseDeliveryTypeScene.enter((ctx: IBotContext) => {
       .resize()
   );
 });
+
+chooseDeliveryTypeScene.on('text', (ctx: IBotContext) =>
+  handleUnexpectedText(ctx)
+);

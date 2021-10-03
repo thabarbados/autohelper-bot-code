@@ -1,8 +1,9 @@
-import { Markup, Scenes } from 'telegraf';
+import { Scenes } from 'telegraf';
 
 import { botTexts, ScenesNames } from '../../configs';
 import { IBotContext } from '../../domain';
 import { getFileLink } from '../../bot';
+import { handleUnexpectedText } from '../helpers/handle-text-helper';
 
 export const addOrderPhotoDescriptionScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.AddOrderPhotoDescription
@@ -23,3 +24,7 @@ addOrderPhotoDescriptionScene.on('photo', async (ctx: IBotContext) => {
 
   return ctx.scene.enter(ScenesNames.ChooseDeliveryType);
 });
+
+addOrderPhotoDescriptionScene.on('text', (ctx: IBotContext) =>
+  handleUnexpectedText(ctx)
+);
