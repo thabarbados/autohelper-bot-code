@@ -1,6 +1,6 @@
 export enum ScenesNames {
   ChooseOrderCount = 'chooseOrderCount',
-  MultipleOrdersNote = 'multipleOrdersNote',
+  MultipleOrdersNotice = 'multipleOrdersNotice',
   ChooseOrderDescriptionType = 'chooseOrderDescriptionType',
   AddOrderPhotoDescription = 'addOrderPhotoDescription',
   AddOrderTextDescription = 'addOrderTextDescription',

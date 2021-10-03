@@ -38,8 +38,8 @@ chooseOrdersCountScene.enter(async (ctx: IBotContext) => {
       : botTexts.defaultUserName;
 
   return await ctx.reply(
-    botTexts.welcomeString(userName),
-    Markup.keyboard([[buttonsValue.singleOrder], [buttonsValue.multipleOrders]])
+    botTexts.welcomeMessage(userName),
+    Markup.keyboard([[buttonsValue.singleOrderBtn], [buttonsValue.multipleOrdersBtn]])
       .oneTime()
       .resize()
   );

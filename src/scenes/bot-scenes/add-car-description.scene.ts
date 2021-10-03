@@ -8,7 +8,7 @@ export const addCarDescriptionScene = new Scenes.BaseScene<IBotContext>(
 );
 
 addCarDescriptionScene.enter((ctx: IBotContext) =>
-  ctx.reply(botTexts.addAutoDescriptionNote)
+  ctx.reply(botTexts.addCarDescriptionNote)
 );
 
 addCarDescriptionScene.on('text', async (ctx: IBotContext) => {

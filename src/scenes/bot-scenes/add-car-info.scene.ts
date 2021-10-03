@@ -9,11 +9,11 @@ export const addCarInfoScene = new Scenes.BaseScene<IBotContext>(
 
 addCarInfoScene.enter((ctx: IBotContext) => {
   return ctx.reply(
-    botTexts.addAutoInfoNote,
+    botTexts.addCarInfoNote,
     Markup.keyboard([
-      [buttonsValue.addAutoDocPhotoTitle],
-      [buttonsValue.addAutoVinNumberTitle],
-      [buttonsValue.addAutoDescriptionTitle],
+      [buttonsValue.addCarDocsPhotoBtn],
+      [buttonsValue.addCarVinNumberBtn],
+      [buttonsValue.addCarDescriptionBtn],
     ])
       .oneTime()
       .resize()

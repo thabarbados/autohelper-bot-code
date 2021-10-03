@@ -9,7 +9,7 @@ export const createOrderScene = new Scenes.BaseScene<IBotContext>(
 );
 
 createOrderScene.enter(async (ctx: IBotContext) => {
-  await ctx.reply(botTexts.fullOrderDataNote);
+  await ctx.reply(botTexts.createOrderNotice);
 
   Markup.removeKeyboard();
 
@@ -26,7 +26,7 @@ createOrderScene.enter(async (ctx: IBotContext) => {
         {
           url: ctx.session.state.orderPhotoUrl,
         },
-        { caption: botTexts.orderPhotoText }
+        { caption: botTexts.orderPhotoCaption }
       );
     }
 
@@ -37,7 +37,7 @@ createOrderScene.enter(async (ctx: IBotContext) => {
           url: ctx.session.state.autoDocPhotoUrl,
         },
         {
-          caption: botTexts.orderCarDocPhotoText,
+          caption: botTexts.orderCarDocsPhotoCaption,
         }
       );
     }

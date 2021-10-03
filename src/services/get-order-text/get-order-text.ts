@@ -24,7 +24,7 @@ export function getOrderText(state: IBotState) {
     orderTextDescription.length > 0
       ? `<strong>Заказчик добавил описание запчасти</strong>: ${orderTextDescription}.\n`
       : ''
-  }${`<strong>Выбран тип доставки</strong>: ${deliveryType}. ${
+  }${`<strong>Тип доставки</strong>: ${deliveryType}. ${
     deliveryAddress.length > 0
       ? `Доставку нужно осуществить по адресу: ${deliveryAddress}`
       : ''
@@ -36,5 +36,5 @@ export function getOrderText(state: IBotState) {
     autoParams.length > 0
       ? `<strong>Дополнительная информация о автомобиле</strong>: ${autoParams}.\n`
       : ''
-  }<strong>Выбрано качество запчасти</strong>: ${partsQuality}.\n<strong>Срочность заказа</strong>: ${orderUrgency}.`;
+  }<strong>Качество запчасти</strong>: ${partsQuality}.\n<strong>Срочность заказа</strong>: ${orderUrgency}.`;
 }

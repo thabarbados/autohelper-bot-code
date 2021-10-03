@@ -8,7 +8,7 @@ export const addCarVinNumberScene = new Scenes.BaseScene<IBotContext>(
 );
 
 addCarVinNumberScene.enter((ctx: IBotContext) =>
-  ctx.reply(botTexts.addAutoVinNumberNote)
+  ctx.reply(botTexts.addCarVinNumberNote)
 );
 
 addCarVinNumberScene.on('text', async (ctx: IBotContext) => {

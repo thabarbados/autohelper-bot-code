@@ -11,9 +11,8 @@ chooseDeliveryTypeScene.enter((ctx: IBotContext) => {
   return ctx.reply(
     botTexts.chooseDeliveryTypeNote,
     Markup.keyboard([
-      [buttonsValue.selfOrderPickUp],
-      [buttonsValue.pointOrderPickUp],
-      [buttonsValue.orderWithDelivery],
+      [buttonsValue.orderFromPointBtn],
+      [buttonsValue.orderWithDeliveryBtn],
     ])
       .oneTime()
       .resize()

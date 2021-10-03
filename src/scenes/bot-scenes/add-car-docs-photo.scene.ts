@@ -9,7 +9,7 @@ export const addCarDocsPhotoScene = new Scenes.BaseScene<IBotContext>(
 );
 
 addCarDocsPhotoScene.enter((ctx: IBotContext) =>
-  ctx.reply(botTexts.addAutoDocPhotoNote)
+  ctx.reply(botTexts.addCarDocsPhotoNote)
 );
 
 addCarDocsPhotoScene.on('photo', async (ctx: IBotContext) => {

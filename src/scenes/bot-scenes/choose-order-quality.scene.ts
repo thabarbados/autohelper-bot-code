@@ -9,11 +9,11 @@ export const chooseOrderQualityScene = new Scenes.BaseScene<IBotContext>(
 
 chooseOrderQualityScene.enter((ctx: IBotContext) => {
   return ctx.reply(
-    botTexts.partsQualityNote,
+    botTexts.chooseOrderQualityNote,
     Markup.keyboard([
-      [buttonsValue.originalPartsQuality],
-      [buttonsValue.cheapPartsQuality],
-      [buttonsValue.goodPartsQuality],
+      [buttonsValue.orderOriginalQualityBtn],
+      [buttonsValue.orderCheapQualityBtn],
+      [buttonsValue.orderBaseQualityBtn],
     ])
       .oneTime()
       .resize()

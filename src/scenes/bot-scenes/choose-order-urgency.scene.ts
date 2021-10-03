@@ -9,10 +9,10 @@ export const chooseOrderUrgencyScene = new Scenes.BaseScene<IBotContext>(
 
 chooseOrderUrgencyScene.enter((ctx: IBotContext) => {
   return ctx.reply(
-    botTexts.orderUrgencyNote,
+    botTexts.chooseOrderUrgencyNote,
     Markup.keyboard([
-      [buttonsValue.lowUrgensyOrder],
-      [buttonsValue.highUrgencyOrder],
+      [buttonsValue.lowUrgensyOrderBtn],
+      [buttonsValue.highUrgencyOrderBtn],
     ])
       .oneTime()
       .resize()

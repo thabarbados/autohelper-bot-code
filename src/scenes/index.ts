@@ -1,5 +1,5 @@
 export * from './bot-scenes/choose-order-count.scene';
-export * from './bot-scenes/multiple-orders-note.scene';
+export * from './bot-scenes/multiple-orders-notice.scene';
 export * from './bot-scenes/choose-order-description-type.scene';
 export * from './bot-scenes/add-order-photo-description.scene';
 export * from './bot-scenes/add-order-text-description.scene';

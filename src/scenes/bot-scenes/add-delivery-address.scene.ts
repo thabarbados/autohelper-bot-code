@@ -8,7 +8,7 @@ export const addDeliveryAddressScene = new Scenes.BaseScene<IBotContext>(
 );
 
 addDeliveryAddressScene.enter((ctx: IBotContext) =>
-  ctx.reply(botTexts.deliveryAddressNote)
+  ctx.reply(botTexts.addDeliveryAddressNote)
 );
 
 addDeliveryAddressScene.on('text', async (ctx: IBotContext) => {

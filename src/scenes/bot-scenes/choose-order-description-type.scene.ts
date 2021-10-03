@@ -10,8 +10,8 @@ chooseOrderDescriptionTypeScene.enter(async (ctx: IBotContext) => {
   return ctx.reply(
     botTexts.chooseOrderDescriptionTypeNote,
     Markup.keyboard([
-      [buttonsValue.addPhotoDescription],
-      [buttonsValue.addTextDescription],
+      [buttonsValue.addPhotoDescriptionBtn],
+      [buttonsValue.addTextDescriptionBtn],
     ])
       .oneTime()
       .resize()
