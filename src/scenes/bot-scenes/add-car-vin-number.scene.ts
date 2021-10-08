@@ -12,9 +12,15 @@ addCarVinNumberScene.enter((ctx: IBotContext) =>
 );
 
 addCarVinNumberScene.on('text', async (ctx: IBotContext) => {
+  const { state } = ctx.session;
+
   if (ctx.message !== undefined && 'text' in ctx.message) {
-    ctx.session.state.autoVinNumber = ctx.message.text;
+    state.carVinNumber = ctx.message.text;
   }
 
-  return ctx.scene.enter(ScenesNames.ChooseOrderQuality);
+  return ctx.scene.enter(
+    state.hasFilledOrder
+      ? ScenesNames.OrderConfirmation
+      : ScenesNames.ChooseOrderQuality
+  );
 });

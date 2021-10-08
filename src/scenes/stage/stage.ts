@@ -18,7 +18,9 @@ import {
   chooseOrderQualityScene,
   chooseOrderUrgencyScene,
   createOrderScene,
-} from '../../scenes';
+  orderConfirmationScene,
+} from '@src/scenes';
+import { hasFilledField } from '@src/services';
 
 export const stage = new Scenes.Stage<IBotContext>([
   chooseOrdersCountScene,
@@ -35,6 +37,7 @@ export const stage = new Scenes.Stage<IBotContext>([
   chooseOrderQualityScene,
   chooseOrderUrgencyScene,
   createOrderScene,
+  orderConfirmationScene,
 ]);
 
 stage.hears(buttonsValue.multipleOrdersBtn, (ctx: IBotContext) =>
@@ -55,9 +58,19 @@ stage.hears(buttonsValue.addTextDescriptionBtn, (ctx: IBotContext) =>
 );
 
 stage.hears(buttonsValue.orderFromPointBtn, (ctx: IBotContext) => {
-  ctx.session.state.deliveryType = buttonsValue.orderFromPointBtn;
+  const { state } = ctx.session;
 
-  ctx.scene.enter(ScenesNames.AddCarInfoScene);
+  state.deliveryType = buttonsValue.orderFromPointBtn;
+
+  if (hasFilledField('deliveryAddress', state)) {
+    state.deliveryAddress = '';
+  }
+
+  ctx.scene.enter(
+    state.hasFilledOrder
+      ? ScenesNames.OrderConfirmation
+      : ScenesNames.AddCarInfoScene
+  );
 });
 
 stage.hears(buttonsValue.orderWithDeliveryBtn, (ctx: IBotContext) => {
@@ -79,32 +92,102 @@ stage.hears(buttonsValue.addCarDescriptionBtn, (ctx: IBotContext) =>
 );
 
 stage.hears(buttonsValue.orderOriginalQualityBtn, (ctx: IBotContext) => {
-  ctx.session.state.partsQuality = buttonsValue.orderOriginalQualityBtn;
+  const { state } = ctx.session;
 
-  ctx.scene.enter(ScenesNames.ChooseOrderUrgency);
+  state.orderQuality = buttonsValue.orderOriginalQualityBtn;
+
+  ctx.scene.enter(
+    state.hasFilledOrder
+      ? ScenesNames.OrderConfirmation
+      : ScenesNames.ChooseOrderUrgency
+  );
 });
 
 stage.hears(buttonsValue.orderCheapQualityBtn, (ctx: IBotContext) => {
-  ctx.session.state.partsQuality = buttonsValue.orderCheapQualityBtn;
+  const { state } = ctx.session;
 
-  ctx.scene.enter(ScenesNames.ChooseOrderUrgency);
+  state.orderQuality = buttonsValue.orderCheapQualityBtn;
+
+  ctx.scene.enter(
+    state.hasFilledOrder
+      ? ScenesNames.OrderConfirmation
+      : ScenesNames.ChooseOrderUrgency
+  );
 });
 
 stage.hears(buttonsValue.orderBaseQualityBtn, (ctx: IBotContext) => {
-  ctx.session.state.partsQuality = buttonsValue.orderBaseQualityBtn;
+  const { state } = ctx.session;
 
-  ctx.scene.enter(ScenesNames.ChooseOrderUrgency);
+  state.orderQuality = buttonsValue.orderBaseQualityBtn;
+
+  ctx.scene.enter(
+    state.hasFilledOrder
+      ? ScenesNames.OrderConfirmation
+      : ScenesNames.ChooseOrderUrgency
+  );
 });
 
 stage.hears(buttonsValue.lowUrgensyOrderBtn, (ctx: IBotContext) => {
-  ctx.session.state.orderUrgency = buttonsValue.lowUrgensyOrderBtn;
+  const { state } = ctx.session;
 
-  ctx.scene.enter(ScenesNames.CreateOrder);
+  state.orderUrgency = buttonsValue.lowUrgensyOrderBtn;
+
+  if (!state.hasFilledOrder) {
+    state.hasFilledOrder = true;
+  }
+
+  ctx.scene.enter(ScenesNames.OrderConfirmation);
 });
 
 stage.hears(buttonsValue.highUrgencyOrderBtn, (ctx: IBotContext) => {
-  ctx.session.state.orderUrgency = buttonsValue.highUrgencyOrderBtn;
+  const { state } = ctx.session;
 
+  state.orderUrgency = buttonsValue.highUrgencyOrderBtn;
+
+  if (!state.hasFilledOrder) {
+    state.hasFilledOrder = true;
+  }
+
+  ctx.scene.enter(ScenesNames.OrderConfirmation);
+});
+
+stage.hears(buttonsValue.changeOrderDescriptionBtn, (ctx: IBotContext) => {
+  ctx.scene.enter(ScenesNames.AddOrderTextDescription);
+});
+
+stage.hears(buttonsValue.changeOrderPhotoBtn, (ctx: IBotContext) => {
+  ctx.scene.enter(ScenesNames.AddOrderPhotoDescription);
+});
+
+stage.hears(buttonsValue.changeCarDocsPhotoBtn, (ctx: IBotContext) => {
+  ctx.scene.enter(ScenesNames.AddCarDocsPhoto);
+});
+
+stage.hears(buttonsValue.changeCarVinNumberBtn, (ctx: IBotContext) => {
+  ctx.scene.enter(ScenesNames.AddCarVinNumber);
+});
+
+stage.hears(buttonsValue.changeCarDescriptionBtn, (ctx: IBotContext) => {
+  ctx.scene.enter(ScenesNames.AddCarDescription);
+});
+
+stage.hears(buttonsValue.changeDeliveryTypeBtn, (ctx: IBotContext) => {
+  ctx.scene.enter(ScenesNames.ChooseDeliveryType);
+});
+
+stage.hears(buttonsValue.changeDeliveryAddressBtn, (ctx: IBotContext) => {
+  ctx.scene.enter(ScenesNames.AddDeliveryAddress);
+});
+
+stage.hears(buttonsValue.changeOrderQuality, (ctx: IBotContext) => {
+  ctx.scene.enter(ScenesNames.ChooseOrderQuality);
+});
+
+stage.hears(buttonsValue.changeOrderUrgency, (ctx: IBotContext) => {
+  ctx.scene.enter(ScenesNames.ChooseOrderUrgency);
+});
+
+stage.hears(buttonsValue.confirmOrderBtn, (ctx: IBotContext) => {
   ctx.scene.enter(ScenesNames.CreateOrder);
 });
 

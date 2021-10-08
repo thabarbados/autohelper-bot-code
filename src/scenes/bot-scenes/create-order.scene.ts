@@ -2,7 +2,7 @@ import { Markup, Scenes } from 'telegraf';
 
 import { botTexts, ScenesNames, VT_CHAT_ID } from '@src/configs';
 import { IBotContext } from '@src/domain';
-import { getOrderText } from '@src/services';
+import { getOrderText, hasFilledField } from '@src/services';
 import { sendPhotoToChat } from '@src/scenes';
 
 export const createOrderScene = new Scenes.BaseScene<IBotContext>(
@@ -10,29 +10,31 @@ export const createOrderScene = new Scenes.BaseScene<IBotContext>(
 );
 
 createOrderScene.enter(async (ctx: IBotContext) => {
+  const { state } = ctx.session;
+
   await ctx.reply(botTexts.createOrderNotice, Markup.removeKeyboard());
 
   const chatIds = [VT_CHAT_ID];
 
-  const orderMessage = getOrderText(ctx.session.state);
+  const orderMessage = getOrderText(state, true);
 
   for (const id of chatIds) {
     await ctx.telegram.sendMessage(id, orderMessage, { parse_mode: 'HTML' });
 
-    if (ctx.session.state.orderPhotoUrl.length > 0) {
+    if (hasFilledField('orderPhoto', state)) {
       await sendPhotoToChat(
         ctx,
         id,
-        ctx.session.state.orderPhotoUrl,
+        state.orderPhotoUrl,
         botTexts.orderPhotoCaption
       );
     }
 
-    if (ctx.session.state.autoDocPhotoUrl.length > 0) {
+    if (hasFilledField('carDocsPhoto', state)) {
       await sendPhotoToChat(
         ctx,
         id,
-        ctx.session.state.autoDocPhotoUrl,
+        state.carDocsPhotoUrl,
         botTexts.orderCarDocsPhotoCaption
       );
     }

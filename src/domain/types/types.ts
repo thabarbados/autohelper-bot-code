@@ -2,6 +2,7 @@ import { Context, Scenes } from "telegraf";
 
 export interface IBotState {
   isMultipleOrder: boolean;
+  hasFilledOrder: boolean;
   userName: string;
   userSurname: string;
   userNickname: string;
@@ -10,10 +11,10 @@ export interface IBotState {
   orderTextDescription: string;
   deliveryType: string;
   deliveryAddress: string;
-  autoDocPhotoUrl: string;
-  autoVinNumber: string;
-  autoParams: string;
-  partsQuality: string;
+  carDocsPhotoUrl: string;
+  carVinNumber: string;
+  carDescription: string;
+  orderQuality: string;
   orderUrgency: string;
 }
 

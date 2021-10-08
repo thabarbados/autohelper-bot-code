@@ -12,5 +12,6 @@ export enum ScenesNames {
   AddCarDescription = 'addCarDescription',
   ChooseOrderQuality = 'chooseOrderQuality',
   ChooseOrderUrgency = 'chooseOrderUrgency',
+  OrderConfirmation = 'orderConfirmation',
   CreateOrder = 'createOrder',
 }

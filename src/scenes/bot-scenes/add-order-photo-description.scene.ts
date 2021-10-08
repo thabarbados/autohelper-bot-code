@@ -14,15 +14,21 @@ addOrderPhotoDescriptionScene.enter((ctx: IBotContext) =>
 );
 
 addOrderPhotoDescriptionScene.on('photo', async (ctx: IBotContext) => {
+  const { state } = ctx.session;
+
   if (ctx.message !== undefined && 'photo' in ctx.message) {
     const largePhotoID =
       ctx.message.photo[ctx.message.photo.length - 1].file_id;
     const fileData = await getFileLink(largePhotoID);
 
-    ctx.session.state.orderPhotoUrl = fileData.href;
+    state.orderPhotoUrl = fileData.href;
   }
 
-  return ctx.scene.enter(ScenesNames.ChooseDeliveryType);
+  return ctx.scene.enter(
+    state.hasFilledOrder
+      ? ScenesNames.OrderConfirmation
+      : ScenesNames.ChooseDeliveryType
+  );
 });
 
 addOrderPhotoDescriptionScene.on('text', (ctx: IBotContext) =>

@@ -12,9 +12,15 @@ addOrderTextDescriptionScene.enter((ctx: IBotContext) =>
 );
 
 addOrderTextDescriptionScene.on('text', async (ctx: IBotContext) => {
+  const { state } = ctx.session;
+
   if (ctx.message !== undefined && 'text' in ctx.message) {
-    ctx.session.state.orderTextDescription = ctx.message.text;
+    state.orderTextDescription = ctx.message.text;
   }
 
-  return ctx.scene.enter(ScenesNames.ChooseDeliveryType);
+  return ctx.scene.enter(
+    state.hasFilledOrder
+      ? ScenesNames.OrderConfirmation
+      : ScenesNames.ChooseDeliveryType
+  );
 });

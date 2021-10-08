@@ -2,6 +2,7 @@ import { IBotState } from '@src/domain/types/types';
 
 export const botState: IBotState = {
   isMultipleOrder: false,
+  hasFilledOrder: false,
   userName: '',
   userSurname: '',
   userNickname: '',
@@ -10,9 +11,9 @@ export const botState: IBotState = {
   orderTextDescription: '',
   deliveryType: '',
   deliveryAddress: '',
-  autoDocPhotoUrl: '',
-  autoVinNumber: '',
-  autoParams: '',
-  partsQuality: '',
+  carDocsPhotoUrl: '',
+  carVinNumber: '',
+  carDescription: '',
+  orderQuality: '',
   orderUrgency: '',
 };

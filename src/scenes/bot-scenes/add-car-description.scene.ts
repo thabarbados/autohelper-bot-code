@@ -12,9 +12,15 @@ addCarDescriptionScene.enter((ctx: IBotContext) =>
 );
 
 addCarDescriptionScene.on('text', async (ctx: IBotContext) => {
+  const { state } = ctx.session;
+
   if (ctx.message !== undefined && 'text' in ctx.message) {
-    ctx.session.state.autoParams = ctx.message.text;
+    state.carDescription = ctx.message.text;
   }
 
-  return ctx.scene.enter(ScenesNames.ChooseOrderQuality);
+  return ctx.scene.enter(
+    state.hasFilledOrder
+      ? ScenesNames.OrderConfirmation
+      : ScenesNames.ChooseOrderQuality
+  );
 });

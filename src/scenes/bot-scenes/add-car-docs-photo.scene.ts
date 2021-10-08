@@ -14,15 +14,21 @@ addCarDocsPhotoScene.enter((ctx: IBotContext) =>
 );
 
 addCarDocsPhotoScene.on('photo', async (ctx: IBotContext) => {
+  const { state } = ctx.session;
+
   if (ctx.message !== undefined && 'photo' in ctx.message) {
     const largePhotoID =
       ctx.message.photo[ctx.message.photo.length - 1].file_id;
     const fileData = await getFileLink(largePhotoID);
 
-    ctx.session.state.autoDocPhotoUrl = fileData.href;
+    state.carDocsPhotoUrl = fileData.href;
   }
 
-  return ctx.scene.enter(ScenesNames.ChooseOrderQuality);
+  return ctx.scene.enter(
+    state.hasFilledOrder
+      ? ScenesNames.OrderConfirmation
+      : ScenesNames.ChooseOrderQuality
+  );
 });
 
 addCarDocsPhotoScene.on('text', (ctx: IBotContext) =>
