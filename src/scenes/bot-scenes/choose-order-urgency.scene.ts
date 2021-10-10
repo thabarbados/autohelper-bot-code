@@ -21,5 +21,5 @@ chooseOrderUrgencyScene.enter((ctx: IBotContext) => {
 });
 
 chooseOrderUrgencyScene.on('text', (ctx: IBotContext) =>
-  handleUnexpectedText(ctx)
+  handleUnexpectedText(ctx, 'buttons')
 );

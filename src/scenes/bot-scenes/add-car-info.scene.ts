@@ -21,4 +21,4 @@ addCarInfoScene.enter((ctx: IBotContext) => {
   );
 });
 
-addCarInfoScene.on('text', (ctx: IBotContext) => handleUnexpectedText(ctx));
+addCarInfoScene.on('text', (ctx: IBotContext) => handleUnexpectedText(ctx, 'buttons'));

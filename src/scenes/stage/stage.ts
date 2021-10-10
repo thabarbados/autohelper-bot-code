@@ -156,10 +156,14 @@ stage.hears(buttonsValue.changeOrderDescriptionBtn, (ctx: IBotContext) => {
 });
 
 stage.hears(buttonsValue.changeOrderPhotoBtn, (ctx: IBotContext) => {
+  ctx.session.state.orderPhotoUrls = [];
+
   ctx.scene.enter(ScenesNames.AddOrderPhotoDescription);
 });
 
 stage.hears(buttonsValue.changeCarDocsPhotoBtn, (ctx: IBotContext) => {
+  ctx.session.state.carDocsPhotoUrls = [];
+
   ctx.scene.enter(ScenesNames.AddCarDocsPhoto);
 });
 

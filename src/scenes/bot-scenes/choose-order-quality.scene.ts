@@ -22,5 +22,5 @@ chooseOrderQualityScene.enter((ctx: IBotContext) => {
 });
 
 chooseOrderQualityScene.on('text', (ctx: IBotContext) =>
-  handleUnexpectedText(ctx)
+  handleUnexpectedText(ctx, 'buttons')
 );

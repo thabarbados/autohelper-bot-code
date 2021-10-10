@@ -50,5 +50,5 @@ chooseOrdersCountScene.enter(async (ctx: IBotContext) => {
 });
 
 chooseOrdersCountScene.on('text', (ctx: IBotContext) =>
-  handleUnexpectedText(ctx)
+  handleUnexpectedText(ctx, 'buttons')
 );

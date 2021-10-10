@@ -5,10 +5,10 @@ export type StoreFields =
   | 'userNickName'
   | 'userChatId'
   | 'orderTextDescription'
-  | 'orderPhoto'
+  | 'orderPhotoUrls'
   | 'deliveryAddress'
   | 'carVinNumber'
-  | 'carDocsPhoto'
+  | 'carDocsPhotoUrls'
   | 'carDescription';
 
 export function hasFilledField(field: StoreFields, state: IBotState): boolean {
@@ -28,8 +28,8 @@ export function hasFilledField(field: StoreFields, state: IBotState): boolean {
     return 'orderTextDescription' in state && state.orderTextDescription.length > 0;
   }
 
-  if (field === 'orderPhoto') {
-    return 'orderPhoto' in state && state.orderPhotoUrl.length > 0;
+  if (field === 'orderPhotoUrls') {
+    return 'orderPhotoUrls' in state && state.orderPhotoUrls.length > 0;
   }
 
   if (field === 'deliveryAddress') {
@@ -44,8 +44,8 @@ export function hasFilledField(field: StoreFields, state: IBotState): boolean {
     return 'carVinNumber' in state && state.carVinNumber.length > 0;
   }
 
-  if (field === 'carDocsPhoto') {
-    return 'carDocsPhoto' in state && state.carDocsPhotoUrl.length > 0;
+  if (field === 'carDocsPhotoUrls') {
+    return 'carDocsPhotoUrls' in state && state.carDocsPhotoUrls.length > 0;
   }
 
   return false;

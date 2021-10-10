@@ -1,4 +1,4 @@
-import { Scenes } from 'telegraf';
+import { Markup, Scenes } from 'telegraf';
 
 import { botTexts, ScenesNames } from '@src/configs';
 import { IBotContext } from '@src/domain';
@@ -8,7 +8,7 @@ export const addOrderTextDescriptionScene = new Scenes.BaseScene<IBotContext>(
 );
 
 addOrderTextDescriptionScene.enter((ctx: IBotContext) =>
-  ctx.reply(botTexts.addTextDescriptionNote)
+  ctx.reply(botTexts.addTextDescriptionNote, Markup.removeKeyboard())
 );
 
 addOrderTextDescriptionScene.on('text', async (ctx: IBotContext) => {

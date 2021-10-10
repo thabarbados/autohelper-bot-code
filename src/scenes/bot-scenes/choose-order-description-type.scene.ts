@@ -20,5 +20,5 @@ chooseOrderDescriptionTypeScene.enter(async (ctx: IBotContext) => {
 });
 
 chooseOrderDescriptionTypeScene.on('text', (ctx: IBotContext) =>
-  handleUnexpectedText(ctx)
+  handleUnexpectedText(ctx, 'buttons')
 );

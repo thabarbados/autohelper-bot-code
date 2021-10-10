@@ -21,20 +21,20 @@ createOrderScene.enter(async (ctx: IBotContext) => {
   for (const id of chatIds) {
     await ctx.telegram.sendMessage(id, orderMessage, { parse_mode: 'HTML' });
 
-    if (hasFilledField('orderPhoto', state)) {
+    if (hasFilledField('orderPhotoUrls', state)) {
       await sendPhotoToChat(
         ctx,
         id,
-        state.orderPhotoUrl,
+        state.orderPhotoUrls,
         botTexts.orderPhotoCaption
       );
     }
 
-    if (hasFilledField('carDocsPhoto', state)) {
+    if (hasFilledField('carDocsPhotoUrls', state)) {
       await sendPhotoToChat(
         ctx,
         id,
-        state.carDocsPhotoUrl,
+        state.carDocsPhotoUrls,
         botTexts.orderCarDocsPhotoCaption
       );
     }

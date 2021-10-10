@@ -1,4 +1,4 @@
-import { Scenes } from 'telegraf';
+import { Markup, Scenes } from 'telegraf';
 
 import { botTexts, ScenesNames } from '@src/configs';
 import { IBotContext } from '@src/domain';
@@ -8,7 +8,7 @@ export const addCarVinNumberScene = new Scenes.BaseScene<IBotContext>(
 );
 
 addCarVinNumberScene.enter((ctx: IBotContext) =>
-  ctx.reply(botTexts.addCarVinNumberNote)
+  ctx.reply(botTexts.addCarVinNumberNote, Markup.removeKeyboard())
 );
 
 addCarVinNumberScene.on('text', async (ctx: IBotContext) => {

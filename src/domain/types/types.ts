@@ -1,17 +1,21 @@
-import { Context, Scenes } from "telegraf";
+import { Context, Scenes } from 'telegraf';
 
 export interface IBotState {
   isMultipleOrder: boolean;
   hasFilledOrder: boolean;
+  startLoadPhotoDescriptionTime: bigint;
+  startLoadCarDocsPhotoTime: bigint;
+  hasShowChooseDeliveryTypeSceneAction: boolean;
+  hasShowChooseOrderQualitySceneAction: boolean;
   userName: string;
   userSurname: string;
   userNickname: string;
   userChatId: number;
-  orderPhotoUrl: string;
+  orderPhotoUrls: string[];
   orderTextDescription: string;
   deliveryType: string;
   deliveryAddress: string;
-  carDocsPhotoUrl: string;
+  carDocsPhotoUrls: string[];
   carVinNumber: string;
   carDescription: string;
   orderQuality: string;

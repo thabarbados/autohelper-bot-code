@@ -1,4 +1,4 @@
-import { Scenes } from 'telegraf';
+import { Markup, Scenes } from 'telegraf';
 
 import { botTexts, ScenesNames } from '@src/configs';
 import { IBotContext } from '@src/domain';
@@ -8,7 +8,7 @@ export const addDeliveryAddressScene = new Scenes.BaseScene<IBotContext>(
 );
 
 addDeliveryAddressScene.enter((ctx: IBotContext) =>
-  ctx.reply(botTexts.addDeliveryAddressNote)
+  ctx.reply(botTexts.addDeliveryAddressNote, Markup.removeKeyboard())
 );
 
 addDeliveryAddressScene.on('text', async (ctx: IBotContext) => {

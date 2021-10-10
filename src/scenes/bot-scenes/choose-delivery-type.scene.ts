@@ -21,5 +21,5 @@ chooseDeliveryTypeScene.enter((ctx: IBotContext) => {
 });
 
 chooseDeliveryTypeScene.on('text', (ctx: IBotContext) =>
-  handleUnexpectedText(ctx)
+  handleUnexpectedText(ctx, 'buttons')
 );

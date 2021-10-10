@@ -20,5 +20,5 @@ multipleOrdersNoticeScene.enter(async (ctx: IBotContext) => {
 });
 
 multipleOrdersNoticeScene.on('text', (ctx: IBotContext) =>
-  handleUnexpectedText(ctx)
+  handleUnexpectedText(ctx, 'buttons')
 );

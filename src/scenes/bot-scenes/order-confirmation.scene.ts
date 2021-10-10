@@ -16,18 +16,23 @@ orderConfirmationScene.enter(async (ctx: IBotContext) => {
   await ctx.reply(botTexts.confirmOrderTitle, Markup.removeKeyboard());
   await ctx.reply(orderMessage, { parse_mode: 'HTML' });
 
-  if (hasFilledField('orderPhoto', state)) {
-    await ctx.replyWithPhoto(
-      { url: state.orderPhotoUrl },
-      { caption: botTexts.orderPhotoCaption }
-    );
+  for (const orderPhotoUrl of state.orderPhotoUrls) {
+    if (hasFilledField('orderPhotoUrls', state)) {
+      await ctx.replyWithPhoto(
+        { url: orderPhotoUrl },
+        { caption: botTexts.orderPhotoCaption }
+      );
+    }
   }
 
-  if (hasFilledField('carDocsPhoto', state)) {
-    await ctx.replyWithPhoto(
-      { url: state.carDocsPhotoUrl },
-      { caption: botTexts.orderCarDocsPhotoCaption }
-    );
+  for (const carDocsPhotoUrl of state.carDocsPhotoUrls) {
+
+    if (hasFilledField('carDocsPhotoUrls', state)) {
+      await ctx.replyWithPhoto(
+        { url: carDocsPhotoUrl },
+        { caption: botTexts.orderCarDocsPhotoCaption }
+      );
+    }
   }
 
   const deliveryDataButtons = [buttonsValue.changeDeliveryTypeBtn];
@@ -43,7 +48,7 @@ orderConfirmationScene.enter(async (ctx: IBotContext) => {
         hasFilledField('orderTextDescription', state)
           ? buttonsValue.changeOrderDescriptionBtn
           : buttonsValue.changeOrderPhotoBtn,
-        hasFilledField('carDocsPhoto', state)
+        hasFilledField('carDocsPhotoUrls', state)
           ? buttonsValue.changeCarDocsPhotoBtn
           : hasFilledField('carVinNumber', state)
           ? buttonsValue.changeCarVinNumberBtn
@@ -58,5 +63,5 @@ orderConfirmationScene.enter(async (ctx: IBotContext) => {
 });
 
 orderConfirmationScene.on('text', (ctx: IBotContext) =>
-  handleUnexpectedText(ctx)
+  handleUnexpectedText(ctx, 'buttons')
 );
