@@ -1,6 +1,6 @@
 import { Markup, Scenes } from 'telegraf';
 
-import { botState } from '@src/store';
+import { BotModule } from '@src/store';
 import { botTexts, buttonsValue, ScenesNames } from '@src/configs';
 import { IBotContext } from '@src/domain';
 import { handleUnexpectedText } from '@src/scenes';
@@ -10,36 +10,33 @@ export const chooseOrdersCountScene = new Scenes.BaseScene<IBotContext>(
 );
 
 chooseOrdersCountScene.enter(async (ctx: IBotContext) => {
-  ctx.session.state = { ...botState };
+  ctx.session.state = new BotModule();
 
-  ctx.session.state.userName =
-    ctx.chat !== undefined && 'first_name' in ctx.chat
-      ? ctx.chat.first_name
-      : '';
+  const { setUserName, setUserSurname, setUserNickname, setUserChatId } =
+    ctx.session.state.orderModule;
 
-  ctx.session.state.userSurname =
-    ctx.chat !== undefined &&
-    'last_name' in ctx.chat &&
-    ctx.chat.last_name !== undefined
-      ? ctx.chat.last_name
-      : '';
+  const { chat } = ctx;
 
-  ctx.session.state.userNickname =
-    ctx.chat !== undefined &&
-    'username' in ctx.chat &&
-    ctx.chat.username !== undefined
-      ? ctx.chat.username
-      : '';
+  if ('first_name' in chat) {
+    setUserName(chat.first_name);
+  }
 
-  ctx.session.state.userChatId = ctx.chat?.id !== undefined ? ctx.chat.id : 0;
+  if ('last_name' in chat && chat.last_name !== undefined) {
+    setUserSurname(chat.last_name);
+  }
 
-  const userName =
-    ctx.message !== undefined && ctx.message.from.first_name.length > 0
-      ? ctx.message.from.first_name
-      : botTexts.defaultUserName;
+  if ('username' in chat && chat.username !== undefined) {
+    setUserNickname(chat.username);
+  }
+
+  setUserChatId(chat.id);
+
+  const { userName } = ctx.session.state.orderModule;
+
+  const welcomeName = userName?.length > 0 ? userName : botTexts.defaultUserName;
 
   return await ctx.reply(
-    botTexts.welcomeMessage(userName),
+    botTexts.welcomeMessage(welcomeName),
     Markup.keyboard([
       [buttonsValue.singleOrderBtn],
       [buttonsValue.multipleOrdersBtn],

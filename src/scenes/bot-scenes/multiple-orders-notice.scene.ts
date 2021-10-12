@@ -9,7 +9,9 @@ export const multipleOrdersNoticeScene = new Scenes.BaseScene<IBotContext>(
 );
 
 multipleOrdersNoticeScene.enter(async (ctx: IBotContext) => {
-  ctx.session.state.isMultipleOrder = true;
+  const { setOrderMultipleStatus } = ctx.session.state.orderModule;
+
+  setOrderMultipleStatus(true);
 
   return ctx.reply(
     botTexts.multipleOrdersNotice,

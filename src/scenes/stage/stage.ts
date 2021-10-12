@@ -20,7 +20,6 @@ import {
   createOrderScene,
   orderConfirmationScene,
 } from '@src/scenes';
-import { hasFilledField } from '@src/services';
 
 export const stage = new Scenes.Stage<IBotContext>([
   chooseOrdersCountScene,
@@ -58,23 +57,27 @@ stage.hears(buttonsValue.addTextDescriptionBtn, (ctx: IBotContext) =>
 );
 
 stage.hears(buttonsValue.orderFromPointBtn, (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const {
+    setDeliveryType,
+    deliveryAddress,
+    setDeliveryAddress,
+    isFilledOrder,
+  } = ctx.session.state.orderModule;
 
-  state.deliveryType = buttonsValue.orderFromPointBtn;
+  setDeliveryType(buttonsValue.orderFromPointBtn);
 
-  if (hasFilledField('deliveryAddress', state)) {
-    state.deliveryAddress = '';
+  if (deliveryAddress?.length > 0) {
+    setDeliveryAddress('');
   }
 
   ctx.scene.enter(
-    state.hasFilledOrder
-      ? ScenesNames.OrderConfirmation
-      : ScenesNames.AddCarInfoScene
+    isFilledOrder ? ScenesNames.OrderConfirmation : ScenesNames.AddCarInfoScene
   );
 });
 
 stage.hears(buttonsValue.orderWithDeliveryBtn, (ctx: IBotContext) => {
-  ctx.session.state.deliveryType = buttonsValue.orderWithDeliveryBtn;
+  const { setDeliveryType } = ctx.session.state.orderModule;
+  setDeliveryType(buttonsValue.orderWithDeliveryBtn);
 
   ctx.scene.enter(ScenesNames.AddDeliveryAddress);
 });
@@ -92,60 +95,62 @@ stage.hears(buttonsValue.addCarDescriptionBtn, (ctx: IBotContext) =>
 );
 
 stage.hears(buttonsValue.orderOriginalQualityBtn, (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const { setOrderQuality, isFilledOrder } = ctx.session.state.orderModule;
 
-  state.orderQuality = buttonsValue.orderOriginalQualityBtn;
+  setOrderQuality(buttonsValue.orderOriginalQualityBtn);
 
   ctx.scene.enter(
-    state.hasFilledOrder
+    isFilledOrder
       ? ScenesNames.OrderConfirmation
       : ScenesNames.ChooseOrderUrgency
   );
 });
 
 stage.hears(buttonsValue.orderCheapQualityBtn, (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const { setOrderQuality, isFilledOrder } = ctx.session.state.orderModule;
 
-  state.orderQuality = buttonsValue.orderCheapQualityBtn;
+  setOrderQuality(buttonsValue.orderCheapQualityBtn);
 
   ctx.scene.enter(
-    state.hasFilledOrder
+    isFilledOrder
       ? ScenesNames.OrderConfirmation
       : ScenesNames.ChooseOrderUrgency
   );
 });
 
 stage.hears(buttonsValue.orderBaseQualityBtn, (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const { setOrderQuality, isFilledOrder } = ctx.session.state.orderModule;
 
-  state.orderQuality = buttonsValue.orderBaseQualityBtn;
+  setOrderQuality(buttonsValue.orderBaseQualityBtn);
 
   ctx.scene.enter(
-    state.hasFilledOrder
+    isFilledOrder
       ? ScenesNames.OrderConfirmation
       : ScenesNames.ChooseOrderUrgency
   );
 });
 
 stage.hears(buttonsValue.lowUrgensyOrderBtn, (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const { setOrderUrgency, isFilledOrder, setOrderFilledStatus } =
+    ctx.session.state.orderModule;
 
-  state.orderUrgency = buttonsValue.lowUrgensyOrderBtn;
+  setOrderUrgency(buttonsValue.lowUrgensyOrderBtn);
 
-  if (!state.hasFilledOrder) {
-    state.hasFilledOrder = true;
+  if (!isFilledOrder) {
+    setOrderFilledStatus(true);
   }
 
   ctx.scene.enter(ScenesNames.OrderConfirmation);
 });
 
 stage.hears(buttonsValue.highUrgencyOrderBtn, (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const { setOrderUrgency, isFilledOrder, setOrderFilledStatus } =
+    ctx.session.state.orderModule;
 
-  state.orderUrgency = buttonsValue.highUrgencyOrderBtn;
+  setOrderUrgency(buttonsValue.highUrgencyOrderBtn);
 
-  if (!state.hasFilledOrder) {
-    state.hasFilledOrder = true;
+  if (!isFilledOrder) {
+    setOrderFilledStatus(true);
   }
 
   ctx.scene.enter(ScenesNames.OrderConfirmation);
@@ -156,13 +161,21 @@ stage.hears(buttonsValue.changeOrderDescriptionBtn, (ctx: IBotContext) => {
 });
 
 stage.hears(buttonsValue.changeOrderPhotoBtn, (ctx: IBotContext) => {
-  ctx.session.state.orderPhotoUrls = [];
+  const { setOrderPhotoUrls } = ctx.session.state.orderModule;
+  const { setOrderPhotoLoadingStatus } = ctx.session.state.scenesModule;
+
+  setOrderPhotoUrls([]);
+  setOrderPhotoLoadingStatus(false);
 
   ctx.scene.enter(ScenesNames.AddOrderPhotoDescription);
 });
 
 stage.hears(buttonsValue.changeCarDocsPhotoBtn, (ctx: IBotContext) => {
-  ctx.session.state.carDocsPhotoUrls = [];
+  const { setCarDocsPhotoUrls } = ctx.session.state.orderModule;
+  const { setCarDocsPhotoLoadingStatus } = ctx.session.state.scenesModule;
+
+  setCarDocsPhotoUrls([]);
+  setCarDocsPhotoLoadingStatus(false);
 
   ctx.scene.enter(ScenesNames.AddCarDocsPhoto);
 });

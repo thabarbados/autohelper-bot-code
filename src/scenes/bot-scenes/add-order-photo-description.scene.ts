@@ -9,7 +9,6 @@ import {
   MILLISECONDS_IN_SECOND,
   NANOSECONDS_IN_SECOND,
 } from '@src/scenes';
-import { hasFilledField } from '@src/services';
 
 export const addOrderPhotoDescriptionScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.AddOrderPhotoDescription
@@ -20,50 +19,60 @@ addOrderPhotoDescriptionScene.enter((ctx: IBotContext) =>
 );
 
 addOrderPhotoDescriptionScene.on('photo', async (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const {
+    setLoadOrderPhotoStartTime,
+    loadOrderPhotoStartTime,
+    setOrderPhotoLoadingStatus,
+  } = ctx.session.state.scenesModule;
 
-  state.startLoadPhotoDescriptionTime = process.hrtime.bigint();
+  const { orderPhotoUrls, setOrderPhotoUrls, isFilledOrder, userChatId } =
+    ctx.session.state.orderModule;
+
+  setLoadOrderPhotoStartTime(process.hrtime.bigint());
 
   if (ctx.message !== undefined && 'photo' in ctx.message) {
     const largePhotoID =
       ctx.message.photo[ctx.message.photo.length - 1].file_id;
     const fileData = await getFileLink(largePhotoID);
 
-    state.orderPhotoUrls.push(fileData.href);
+    setOrderPhotoUrls([...orderPhotoUrls, fileData.href]);
 
     setTimeout(async () => {
-      const stopLoadPhotoDescriptionTime = process.hrtime.bigint();
+      const { isExpiredOrderPhotoLoading } = ctx.session.state.scenesModule;
+
+      const loadOrderPhotoEndTime = process.hrtime.bigint();
 
       const loadPhotoDurationWithTimeout = Number(
-        stopLoadPhotoDescriptionTime - state.startLoadPhotoDescriptionTime
+        loadOrderPhotoEndTime - loadOrderPhotoStartTime
       );
 
       if (
         loadPhotoDurationWithTimeout >
           CHAT_ACTION_DURATION_IN_SECONDS * NANOSECONDS_IN_SECOND &&
-        (!state.hasShowChooseDeliveryTypeSceneAction || state.hasFilledOrder)
+        !isExpiredOrderPhotoLoading
       ) {
-        state.hasShowChooseDeliveryTypeSceneAction = true;
+        setOrderPhotoLoadingStatus(true);
 
         await ctx.scene.enter(
-          state.hasFilledOrder
+          isFilledOrder
             ? ScenesNames.OrderConfirmation
             : ScenesNames.ChooseDeliveryType
         );
       }
     }, CHAT_ACTION_DURATION_IN_SECONDS * MILLISECONDS_IN_SECOND);
 
-    await ctx.telegram.sendChatAction(state.userChatId, 'typing');
+    await ctx.telegram.sendChatAction(userChatId, 'typing');
   }
 });
 
 addOrderPhotoDescriptionScene.on('text', (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const { isExpiredOrderPhotoLoading } = ctx.session.state.scenesModule;
+
+  const { orderPhotoUrls } = ctx.session.state.orderModule;
 
   handleUnexpectedText(
     ctx,
-    !state.hasShowChooseDeliveryTypeSceneAction &&
-      !hasFilledField('orderPhotoUrls', state)
+    !isExpiredOrderPhotoLoading && orderPhotoUrls?.length === 0
       ? 'chooseFile'
       : 'waitingBot'
   );

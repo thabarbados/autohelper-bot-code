@@ -12,15 +12,13 @@ addDeliveryAddressScene.enter((ctx: IBotContext) =>
 );
 
 addDeliveryAddressScene.on('text', async (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const { setDeliveryAddress, isFilledOrder } = ctx.session.state.orderModule;
 
   if (ctx.message !== undefined && 'text' in ctx.message) {
-    state.deliveryAddress = ctx.message.text;
+    setDeliveryAddress(ctx.message.text);
   }
 
   return ctx.scene.enter(
-    state.hasFilledOrder
-      ? ScenesNames.OrderConfirmation
-      : ScenesNames.AddCarInfoScene
+    isFilledOrder ? ScenesNames.OrderConfirmation : ScenesNames.AddCarInfoScene
   );
 });

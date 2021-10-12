@@ -12,14 +12,14 @@ addCarVinNumberScene.enter((ctx: IBotContext) =>
 );
 
 addCarVinNumberScene.on('text', async (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const { setCarVinNumber, isFilledOrder } = ctx.session.state.orderModule;
 
   if (ctx.message !== undefined && 'text' in ctx.message) {
-    state.carVinNumber = ctx.message.text;
+    setCarVinNumber(ctx.message.text);
   }
 
   return ctx.scene.enter(
-    state.hasFilledOrder
+    isFilledOrder
       ? ScenesNames.OrderConfirmation
       : ScenesNames.ChooseOrderQuality
   );

@@ -1,25 +1,9 @@
 import { Context, Scenes } from 'telegraf';
+import { IOrderModule, IScenesModule } from '@src/domain';
 
 export interface IBotState {
-  isMultipleOrder: boolean;
-  hasFilledOrder: boolean;
-  startLoadPhotoDescriptionTime: bigint;
-  startLoadCarDocsPhotoTime: bigint;
-  hasShowChooseDeliveryTypeSceneAction: boolean;
-  hasShowChooseOrderQualitySceneAction: boolean;
-  userName: string;
-  userSurname: string;
-  userNickname: string;
-  userChatId: number;
-  orderPhotoUrls: string[];
-  orderTextDescription: string;
-  deliveryType: string;
-  deliveryAddress: string;
-  carDocsPhotoUrls: string[];
-  carVinNumber: string;
-  carDescription: string;
-  orderQuality: string;
-  orderUrgency: string;
+  orderModule: IOrderModule;
+  scenesModule: IScenesModule;
 }
 
 export interface IBotSession extends Scenes.SceneSession {

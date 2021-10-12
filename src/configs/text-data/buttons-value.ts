@@ -16,7 +16,7 @@ export const buttonsValue = Object.freeze({
   highUrgencyOrderBtn: 'Готов подождать',
   confirmOrderBtn: 'Я подтверждаю заказ',
   changeOrderDescriptionBtn: 'Изменить описание запчасти',
-  changeOrderPhotoBtn: 'Изменить фото запчасти',
+  changeOrderPhotoBtn: 'Изменить фото необходимого',
   changeDeliveryTypeBtn: 'Изменить тип доставки',
   changeDeliveryAddressBtn: 'Изменить адресс доставки',
   changeCarDocsPhotoBtn: 'Изменить фото ПТС',

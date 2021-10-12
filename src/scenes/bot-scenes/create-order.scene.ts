@@ -1,8 +1,14 @@
 import { Markup, Scenes } from 'telegraf';
 
-import { botTexts, ScenesNames, VT_CHAT_ID } from '@src/configs';
+import {
+  botTexts,
+  ScenesNames,
+  VT_CHAT_ID,
+  // AD_CHAT_ID,
+  // AC_CHAT_ID,
+} from '@src/configs';
 import { IBotContext } from '@src/domain';
-import { getOrderText, hasFilledField } from '@src/services';
+import { getOrderText } from '@src/services';
 import { sendPhotoToChat } from '@src/scenes';
 
 export const createOrderScene = new Scenes.BaseScene<IBotContext>(
@@ -10,31 +16,34 @@ export const createOrderScene = new Scenes.BaseScene<IBotContext>(
 );
 
 createOrderScene.enter(async (ctx: IBotContext) => {
-  const { state } = ctx.session;
+  const { orderPhotoUrls, carDocsPhotoUrls } = ctx.session.state.orderModule;
 
   await ctx.reply(botTexts.createOrderNotice, Markup.removeKeyboard());
 
   const chatIds = [VT_CHAT_ID];
 
-  const orderMessage = getOrderText(state, true);
+  const orderMessage = getOrderText(
+    ctx.session.state.orderModule,
+    'textWithUserInfo'
+  );
 
   for (const id of chatIds) {
     await ctx.telegram.sendMessage(id, orderMessage, { parse_mode: 'HTML' });
 
-    if (hasFilledField('orderPhotoUrls', state)) {
+    if (orderPhotoUrls?.length > 0) {
       await sendPhotoToChat(
         ctx,
         id,
-        state.orderPhotoUrls,
+        orderPhotoUrls,
         botTexts.orderPhotoCaption
       );
     }
 
-    if (hasFilledField('carDocsPhotoUrls', state)) {
+    if (carDocsPhotoUrls?.length > 0) {
       await sendPhotoToChat(
         ctx,
         id,
-        state.carDocsPhotoUrls,
+        carDocsPhotoUrls,
         botTexts.orderCarDocsPhotoCaption
       );
     }

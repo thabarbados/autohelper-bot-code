@@ -1,12 +1,9 @@
-import { IBotState } from '@src/domain';
-import { hasFilledField } from '@src/services';
-import { botTexts } from '@src/configs';
+import { IOrderModule } from '@src/domain';
 
-export const getOrderText = (state: IBotState, withUserInfo: boolean) => {
-  if (state === undefined) {
-    return botTexts.errorText;
-  }
-
+export const getOrderText = (
+  orderData: IOrderModule,
+  returnType: 'defaultText' | 'textWithUserInfo'
+) => {
   const {
     userName,
     userNickname,
@@ -18,32 +15,32 @@ export const getOrderText = (state: IBotState, withUserInfo: boolean) => {
     carDescription,
     orderQuality,
     orderUrgency,
-  } = state;
+  } = orderData;
 
   return `${
-    withUserInfo
+    returnType === 'textWithUserInfo'
       ? `🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗\n<strong>Внимание, поступил новый заказ.</strong>\n<strong>Заказ сделал</strong> ${
-          hasFilledField('userName', state) ? userName : 'пользователь'
+          userName?.length > 0 ? userName : 'пользователь'
         }${
-          hasFilledField('userNickName', state)
+          userNickname?.length > 0
             ? `, его аккаунт в телеграме: @${userNickname}.`
             : ''
         }\n<strong>ID чата</strong>: ${userChatId}.\n`
       : ''
   }${
-    hasFilledField('orderTextDescription', state)
+    orderTextDescription?.length > 0
       ? `<strong>Описание запчасти</strong>: ${orderTextDescription}.\n`
       : ''
   }${`<strong>Тип доставки</strong>: ${deliveryType}. ${
-    hasFilledField('deliveryAddress', state)
+    deliveryAddress?.length > 0
       ? `Доставку нужно осуществить по адресу: ${deliveryAddress}`
       : ''
   }`}\n${
-    hasFilledField('carVinNumber', state)
+    carVinNumber?.length > 0
       ? `<strong>VIN номер автомобиля</strong>: ${carVinNumber}.\n`
       : ''
   }${
-    hasFilledField('carDescription', state)
+    carDescription?.length > 0
       ? `<strong>Дополнительная информация о автомобиле</strong>: ${carDescription}.\n`
       : ''
   }<strong>Качество запчасти</strong>: ${orderQuality}.\n<strong>Срочность заказа</strong>: ${orderUrgency}.`;
