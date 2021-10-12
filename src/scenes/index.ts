@@ -17,6 +17,7 @@ export * from './bot-scenes/order-confirmation.scene';
 //helpers
 export * from './helpers/handle-text.helper';
 export * from './helpers/send-photo.helper';
+export * from './helpers/switch-scene.helper';
 export * from './helpers/constants';
 // stage
 export * from './stage/stage';

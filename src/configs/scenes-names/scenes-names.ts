@@ -15,3 +15,20 @@ export enum ScenesNames {
   OrderConfirmation = 'orderConfirmation',
   CreateOrder = 'createOrder',
 }
+
+export type SceneName =
+  | ScenesNames.AddCarDocsPhoto
+  | ScenesNames.AddCarInfoScene
+  | ScenesNames.AddCarVinNumber
+  | ScenesNames.AddDeliveryAddress
+  | ScenesNames.AddOrderPhotoDescription
+  | ScenesNames.AddOrderTextDescription
+  | ScenesNames.ChooseDeliveryType
+  | ScenesNames.ChooseOrderCount
+  | ScenesNames.ChooseOrderDescriptionType
+  | ScenesNames.ChooseOrderQuality
+  | ScenesNames.ChooseOrderUrgency
+  | ScenesNames.CreateOrder
+  | ScenesNames.MultipleOrdersNotice
+  | ScenesNames.OrderConfirmation
+  | ScenesNames.AddCarDescription;

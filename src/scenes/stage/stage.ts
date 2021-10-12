@@ -19,6 +19,7 @@ import {
   chooseOrderUrgencyScene,
   createOrderScene,
   orderConfirmationScene,
+  switchScene,
 } from '@src/scenes';
 
 export const stage = new Scenes.Stage<IBotContext>([
@@ -40,20 +41,20 @@ export const stage = new Scenes.Stage<IBotContext>([
 ]);
 
 stage.hears(buttonsValue.multipleOrdersBtn, (ctx: IBotContext) =>
-  ctx.scene.enter(ScenesNames.MultipleOrdersNotice)
+  switchScene(ctx, ScenesNames.MultipleOrdersNotice)
 );
 
 stage.hears(
   [buttonsValue.singleOrderBtn, buttonsValue.multipleOrdersOKBtn],
-  (ctx: IBotContext) => ctx.scene.enter(ScenesNames.ChooseOrderDescriptionType)
+  (ctx: IBotContext) => switchScene(ctx, ScenesNames.ChooseOrderDescriptionType)
 );
 
 stage.hears(buttonsValue.addPhotoDescriptionBtn, (ctx: IBotContext) =>
-  ctx.scene.enter(ScenesNames.AddOrderPhotoDescription)
+  switchScene(ctx, ScenesNames.AddOrderPhotoDescription)
 );
 
 stage.hears(buttonsValue.addTextDescriptionBtn, (ctx: IBotContext) =>
-  ctx.scene.enter(ScenesNames.AddOrderTextDescription)
+  switchScene(ctx, ScenesNames.AddOrderTextDescription)
 );
 
 stage.hears(buttonsValue.orderFromPointBtn, (ctx: IBotContext) => {
@@ -70,7 +71,8 @@ stage.hears(buttonsValue.orderFromPointBtn, (ctx: IBotContext) => {
     setDeliveryAddress('');
   }
 
-  ctx.scene.enter(
+  switchScene(
+    ctx,
     isFilledOrder ? ScenesNames.OrderConfirmation : ScenesNames.AddCarInfoScene
   );
 });
@@ -79,19 +81,19 @@ stage.hears(buttonsValue.orderWithDeliveryBtn, (ctx: IBotContext) => {
   const { setDeliveryType } = ctx.session.state.orderModule;
   setDeliveryType(buttonsValue.orderWithDeliveryBtn);
 
-  ctx.scene.enter(ScenesNames.AddDeliveryAddress);
+  switchScene(ctx, ScenesNames.AddDeliveryAddress);
 });
 
 stage.hears(buttonsValue.addCarDocsPhotoBtn, (ctx: IBotContext) =>
-  ctx.scene.enter(ScenesNames.AddCarDocsPhoto)
+  switchScene(ctx, ScenesNames.AddCarDocsPhoto)
 );
 
 stage.hears(buttonsValue.addCarVinNumberBtn, (ctx: IBotContext) =>
-  ctx.scene.enter(ScenesNames.AddCarVinNumber)
+  switchScene(ctx, ScenesNames.AddCarVinNumber)
 );
 
 stage.hears(buttonsValue.addCarDescriptionBtn, (ctx: IBotContext) =>
-  ctx.scene.enter(ScenesNames.AddCarDescription)
+  switchScene(ctx, ScenesNames.AddCarDescription)
 );
 
 stage.hears(buttonsValue.orderOriginalQualityBtn, (ctx: IBotContext) => {
@@ -99,7 +101,8 @@ stage.hears(buttonsValue.orderOriginalQualityBtn, (ctx: IBotContext) => {
 
   setOrderQuality(buttonsValue.orderOriginalQualityBtn);
 
-  ctx.scene.enter(
+  switchScene(
+    ctx,
     isFilledOrder
       ? ScenesNames.OrderConfirmation
       : ScenesNames.ChooseOrderUrgency
@@ -111,7 +114,8 @@ stage.hears(buttonsValue.orderCheapQualityBtn, (ctx: IBotContext) => {
 
   setOrderQuality(buttonsValue.orderCheapQualityBtn);
 
-  ctx.scene.enter(
+  switchScene(
+    ctx,
     isFilledOrder
       ? ScenesNames.OrderConfirmation
       : ScenesNames.ChooseOrderUrgency
@@ -123,7 +127,8 @@ stage.hears(buttonsValue.orderBaseQualityBtn, (ctx: IBotContext) => {
 
   setOrderQuality(buttonsValue.orderBaseQualityBtn);
 
-  ctx.scene.enter(
+  switchScene(
+    ctx,
     isFilledOrder
       ? ScenesNames.OrderConfirmation
       : ScenesNames.ChooseOrderUrgency
@@ -140,7 +145,7 @@ stage.hears(buttonsValue.lowUrgensyOrderBtn, (ctx: IBotContext) => {
     setOrderFilledStatus(true);
   }
 
-  ctx.scene.enter(ScenesNames.OrderConfirmation);
+  switchScene(ctx, ScenesNames.OrderConfirmation);
 });
 
 stage.hears(buttonsValue.highUrgencyOrderBtn, (ctx: IBotContext) => {
@@ -153,11 +158,11 @@ stage.hears(buttonsValue.highUrgencyOrderBtn, (ctx: IBotContext) => {
     setOrderFilledStatus(true);
   }
 
-  ctx.scene.enter(ScenesNames.OrderConfirmation);
+  switchScene(ctx, ScenesNames.OrderConfirmation);
 });
 
 stage.hears(buttonsValue.changeOrderDescriptionBtn, (ctx: IBotContext) => {
-  ctx.scene.enter(ScenesNames.AddOrderTextDescription);
+  switchScene(ctx, ScenesNames.AddOrderTextDescription);
 });
 
 stage.hears(buttonsValue.changeOrderPhotoBtn, (ctx: IBotContext) => {
@@ -167,7 +172,7 @@ stage.hears(buttonsValue.changeOrderPhotoBtn, (ctx: IBotContext) => {
   setOrderPhotoUrls([]);
   setOrderPhotoLoadingStatus(false);
 
-  ctx.scene.enter(ScenesNames.AddOrderPhotoDescription);
+  switchScene(ctx, ScenesNames.AddOrderPhotoDescription);
 });
 
 stage.hears(buttonsValue.changeCarDocsPhotoBtn, (ctx: IBotContext) => {
@@ -177,37 +182,37 @@ stage.hears(buttonsValue.changeCarDocsPhotoBtn, (ctx: IBotContext) => {
   setCarDocsPhotoUrls([]);
   setCarDocsPhotoLoadingStatus(false);
 
-  ctx.scene.enter(ScenesNames.AddCarDocsPhoto);
+  switchScene(ctx, ScenesNames.AddCarDocsPhoto);
 });
 
 stage.hears(buttonsValue.changeCarVinNumberBtn, (ctx: IBotContext) => {
-  ctx.scene.enter(ScenesNames.AddCarVinNumber);
+  switchScene(ctx, ScenesNames.AddCarVinNumber);
 });
 
 stage.hears(buttonsValue.changeCarDescriptionBtn, (ctx: IBotContext) => {
-  ctx.scene.enter(ScenesNames.AddCarDescription);
+  switchScene(ctx, ScenesNames.AddCarDescription);
 });
 
 stage.hears(buttonsValue.changeDeliveryTypeBtn, (ctx: IBotContext) => {
-  ctx.scene.enter(ScenesNames.ChooseDeliveryType);
+  switchScene(ctx, ScenesNames.ChooseDeliveryType);
 });
 
 stage.hears(buttonsValue.changeDeliveryAddressBtn, (ctx: IBotContext) => {
-  ctx.scene.enter(ScenesNames.AddDeliveryAddress);
+  switchScene(ctx, ScenesNames.AddDeliveryAddress);
 });
 
 stage.hears(buttonsValue.changeOrderQuality, (ctx: IBotContext) => {
-  ctx.scene.enter(ScenesNames.ChooseOrderQuality);
+  switchScene(ctx, ScenesNames.ChooseOrderQuality);
 });
 
 stage.hears(buttonsValue.changeOrderUrgency, (ctx: IBotContext) => {
-  ctx.scene.enter(ScenesNames.ChooseOrderUrgency);
+  switchScene(ctx, ScenesNames.ChooseOrderUrgency);
 });
 
 stage.hears(buttonsValue.confirmOrderBtn, (ctx: IBotContext) => {
-  ctx.scene.enter(ScenesNames.CreateOrder);
+  switchScene(ctx, ScenesNames.CreateOrder);
 });
 
 stage.command('/start', (ctx: IBotContext) =>
-  ctx.scene.enter(ScenesNames.ChooseOrderCount)
+  switchScene(ctx, ScenesNames.ChooseOrderCount)
 );
