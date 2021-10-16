@@ -14,6 +14,7 @@ export * from './bot-scenes/choose-order-quality.scene';
 export * from './bot-scenes/choose-order-urgency.scene';
 export * from './bot-scenes/create-order.scene';
 export * from './bot-scenes/order-confirmation.scene';
+export * from './bot-scenes/start-next-order.scene';
 //helpers
 export * from './helpers/handle-text.helper';
 export * from './helpers/send-photo.helper';

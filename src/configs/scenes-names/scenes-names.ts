@@ -14,6 +14,7 @@ export enum ScenesNames {
   ChooseOrderUrgency = 'chooseOrderUrgency',
   OrderConfirmation = 'orderConfirmation',
   CreateOrder = 'createOrder',
+  StartNextOrder = 'startNextOrder'
 }
 
 export type SceneName =
@@ -31,4 +32,5 @@ export type SceneName =
   | ScenesNames.CreateOrder
   | ScenesNames.MultipleOrdersNotice
   | ScenesNames.OrderConfirmation
-  | ScenesNames.AddCarDescription;
+  | ScenesNames.AddCarDescription
+  | ScenesNames.StartNextOrder;

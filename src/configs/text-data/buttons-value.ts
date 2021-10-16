@@ -24,4 +24,6 @@ export const buttonsValue = Object.freeze({
   changeCarDescriptionBtn: 'Изменить доп информацию',
   changeOrderQuality: 'Изменить качество',
   changeOrderUrgency: 'Изменить сроки',
+  startNextOrder: 'Да, сделаем еще один заказ',
+  stopCreateOrders: 'Нет, на этом все',
 });

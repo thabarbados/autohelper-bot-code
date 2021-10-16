@@ -1,7 +1,7 @@
-import { Scenes } from 'telegraf';
+import { Markup, Scenes } from 'telegraf';
 
 import { IBotContext } from '@src/domain';
-import { ScenesNames, buttonsValue } from '@src/configs';
+import { ScenesNames, buttonsValue, botTexts } from '@src/configs';
 
 import {
   chooseOrdersCountScene,
@@ -20,6 +20,7 @@ import {
   createOrderScene,
   orderConfirmationScene,
   switchScene,
+  startNextOrderScene,
 } from '@src/scenes';
 
 export const stage = new Scenes.Stage<IBotContext>([
@@ -38,6 +39,7 @@ export const stage = new Scenes.Stage<IBotContext>([
   chooseOrderUrgencyScene,
   createOrderScene,
   orderConfirmationScene,
+  startNextOrderScene,
 ]);
 
 stage.hears(buttonsValue.multipleOrdersBtn, (ctx: IBotContext) =>
@@ -211,6 +213,14 @@ stage.hears(buttonsValue.changeOrderUrgency, (ctx: IBotContext) => {
 
 stage.hears(buttonsValue.confirmOrderBtn, (ctx: IBotContext) => {
   switchScene(ctx, ScenesNames.CreateOrder);
+});
+
+stage.hears(buttonsValue.startNextOrder, (ctx: IBotContext) => {
+  switchScene(ctx, ScenesNames.ChooseOrderCount);
+});
+
+stage.hears(buttonsValue.stopCreateOrders, (ctx: IBotContext) => {
+  ctx.reply(botTexts.stopCreateOrdersNotice, Markup.removeKeyboard());
 });
 
 stage.command('/start', (ctx: IBotContext) =>

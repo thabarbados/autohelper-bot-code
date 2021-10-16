@@ -3,19 +3,31 @@ import { Markup, Scenes } from 'telegraf';
 import { BotModule } from '@src/store';
 import { botTexts, buttonsValue, ScenesNames } from '@src/configs';
 import { IBotContext } from '@src/domain';
-import { handleUnexpectedText } from '@src/scenes';
+import { handleUnexpectedText, switchScene } from '@src/scenes';
 
 export const chooseOrdersCountScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.ChooseOrderCount
 );
 
 chooseOrdersCountScene.enter(async (ctx: IBotContext) => {
+  const wasShowMultipleOrderNotice =
+    ctx.session.state?.orderModule?.isMultipleOrder === true;
+
   ctx.session.state = new BotModule();
 
-  const { setUserName, setUserSurname, setUserNickname, setUserChatId } =
-    ctx.session.state.orderModule;
+  const {
+    setUserName,
+    setUserSurname,
+    setUserNickname,
+    setUserChatId,
+    setOrderMultipleStatus,
+  } = ctx.session.state.orderModule;
 
   const { chat } = ctx;
+
+  if (wasShowMultipleOrderNotice) {
+    setOrderMultipleStatus(true);
+  }
 
   if ('first_name' in chat) {
     setUserName(chat.first_name);
@@ -33,17 +45,22 @@ chooseOrdersCountScene.enter(async (ctx: IBotContext) => {
 
   const { userName } = ctx.session.state.orderModule;
 
-  const welcomeName = userName?.length > 0 ? userName : botTexts.defaultUserName;
+  const welcomeName =
+    userName?.length > 0 ? userName : botTexts.defaultUserName;
 
-  return await ctx.reply(
-    botTexts.welcomeMessage(welcomeName),
-    Markup.keyboard([
-      [buttonsValue.singleOrderBtn],
-      [buttonsValue.multipleOrdersBtn],
-    ])
-      .oneTime()
-      .resize()
-  );
+  if (wasShowMultipleOrderNotice) {
+    switchScene(ctx, ScenesNames.ChooseOrderDescriptionType);
+  } else {
+    return await ctx.reply(
+      botTexts.welcomeMessage(welcomeName),
+      Markup.keyboard([
+        [buttonsValue.singleOrderBtn],
+        [buttonsValue.multipleOrdersBtn],
+      ])
+        .oneTime()
+        .resize()
+    );
+  }
 });
 
 chooseOrdersCountScene.on('text', (ctx: IBotContext) =>

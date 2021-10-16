@@ -9,14 +9,15 @@ import {
 } from '@src/configs';
 import { IBotContext } from '@src/domain';
 import { getOrderText } from '@src/services';
-import { sendPhotoToChat } from '@src/scenes';
+import { sendPhotoToChat, switchScene } from '@src/scenes';
 
 export const createOrderScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.CreateOrder
 );
 
 createOrderScene.enter(async (ctx: IBotContext) => {
-  const { orderPhotoUrls, carDocsPhotoUrls } = ctx.session.state.orderModule;
+  const { orderPhotoUrls, carDocsPhotoUrls, isMultipleOrder } =
+    ctx.session.state.orderModule;
 
   await ctx.reply(botTexts.createOrderNotice, Markup.removeKeyboard());
 
@@ -49,5 +50,7 @@ createOrderScene.enter(async (ctx: IBotContext) => {
     }
   }
 
-  return;
+  if (isMultipleOrder) {
+    switchScene(ctx, ScenesNames.StartNextOrder);
+  }
 });
