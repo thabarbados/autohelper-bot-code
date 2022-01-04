@@ -21,6 +21,10 @@ import {
   orderConfirmationScene,
   switchScene,
   startNextOrderScene,
+  addClientChatIdScene,
+  addClientMessageDataScene,
+  clientMessageConfirmationScene,
+  sendClientMessageScene,
 } from '@src/scenes';
 
 export const stage = new Scenes.Stage<IBotContext>([
@@ -40,7 +44,13 @@ export const stage = new Scenes.Stage<IBotContext>([
   createOrderScene,
   orderConfirmationScene,
   startNextOrderScene,
+  addClientChatIdScene,
+  addClientMessageDataScene,
+  clientMessageConfirmationScene,
+  sendClientMessageScene,
 ]);
+
+// Hears
 
 stage.hears(buttonsValue.multipleOrdersBtn, (ctx: IBotContext) =>
   switchScene(ctx, ScenesNames.MultipleOrdersNotice)
@@ -223,6 +233,24 @@ stage.hears(buttonsValue.stopCreateOrders, (ctx: IBotContext) => {
   ctx.reply(botTexts.stopCreateOrdersNotice, Markup.removeKeyboard());
 });
 
+stage.hears(buttonsValue.stopSendClientMessage, (ctx: IBotContext) => {
+  ctx.reply(botTexts.stopSendClientMessageNotice, Markup.removeKeyboard());
+});
+
+stage.hears(buttonsValue.changeClientMessage, (ctx: IBotContext) => {
+  switchScene(ctx, ScenesNames.AddClientChatId);
+});
+
+stage.hears(buttonsValue.sendClientMessage, async (ctx: IBotContext) => {
+  switchScene(ctx, ScenesNames.SendClientMessage);
+});
+
+// Commands
+
 stage.command('/start', (ctx: IBotContext) =>
   switchScene(ctx, ScenesNames.ChooseOrderCount)
 );
+
+stage.command('/answer', (ctx: IBotContext) => {
+  switchScene(ctx, ScenesNames.AddClientChatId);
+});

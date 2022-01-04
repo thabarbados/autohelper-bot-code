@@ -26,4 +26,7 @@ export const buttonsValue = Object.freeze({
   changeOrderUrgency: 'Изменить сроки',
   startNextOrder: 'Да, сделаем еще один заказ',
   stopCreateOrders: 'Нет, на этом все',
+  sendClientMessage: 'Отправить сообщение',
+  changeClientMessage: 'Изменить сообщение',
+  stopSendClientMessage: 'Отменить',
 });

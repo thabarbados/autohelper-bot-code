@@ -1,5 +1,5 @@
 import { Context, Scenes } from 'telegraf';
-import { IOrderModule, IScenesModule } from '@src/domain';
+import { IOrderModule, IScenesModule, IAdminModule } from '@src/domain';
 
 export interface IBotState {
   orderModule: IOrderModule;
@@ -8,6 +8,7 @@ export interface IBotState {
 
 export interface IBotSession extends Scenes.SceneSession {
   state: IBotState;
+  admin: IAdminModule;
 }
 
 export interface IBotContext extends Context {

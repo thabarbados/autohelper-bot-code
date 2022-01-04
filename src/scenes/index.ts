@@ -15,6 +15,10 @@ export * from './bot-scenes/choose-order-urgency.scene';
 export * from './bot-scenes/create-order.scene';
 export * from './bot-scenes/order-confirmation.scene';
 export * from './bot-scenes/start-next-order.scene';
+export * from './bot-scenes/add-client-chat-id.scene';
+export * from './bot-scenes/add-client-message-data.scene';
+export * from './bot-scenes/client-message-confirmation.scene';
+export * from './bot-scenes/send-client-message.scene';
 //helpers
 export * from './helpers/handle-text.helper';
 export * from './helpers/send-photo.helper';

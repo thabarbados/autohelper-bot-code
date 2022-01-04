@@ -14,7 +14,11 @@ export enum ScenesNames {
   ChooseOrderUrgency = 'chooseOrderUrgency',
   OrderConfirmation = 'orderConfirmation',
   CreateOrder = 'createOrder',
-  StartNextOrder = 'startNextOrder'
+  StartNextOrder = 'startNextOrder',
+  AddClientChatId = 'addClientChatId',
+  AddClientMessageData = 'addClientMessageData',
+  ClientMessageConfirmation = 'clientMessageConfirmation',
+  SendClientMessage = 'sendClientMessage',
 }
 
 export type SceneName =
@@ -33,4 +37,8 @@ export type SceneName =
   | ScenesNames.MultipleOrdersNotice
   | ScenesNames.OrderConfirmation
   | ScenesNames.AddCarDescription
-  | ScenesNames.StartNextOrder;
+  | ScenesNames.StartNextOrder
+  | ScenesNames.AddClientChatId
+  | ScenesNames.AddClientMessageData
+  | ScenesNames.ClientMessageConfirmation
+  | ScenesNames.SendClientMessage;

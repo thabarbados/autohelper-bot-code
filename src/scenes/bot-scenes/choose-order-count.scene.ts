@@ -10,10 +10,10 @@ export const chooseOrdersCountScene = new Scenes.BaseScene<IBotContext>(
 );
 
 chooseOrdersCountScene.enter(async (ctx: IBotContext) => {
+  ctx.session.state = new BotModule();
+
   const wasShowMultipleOrderNotice =
     ctx.session.state?.orderModule?.isMultipleOrder === true;
-
-  ctx.session.state = new BotModule();
 
   const {
     setUserName,
