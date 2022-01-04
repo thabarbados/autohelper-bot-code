@@ -1,2 +1,4 @@
 node_modules/
-/src/configs/bot-settings/
+out-tsc/
+settings/
+dist/
