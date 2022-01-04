@@ -2,6 +2,7 @@ import { Markup, Scenes } from 'telegraf';
 
 import { botTexts, ScenesNames } from '@src/configs';
 import { IBotContext } from '@src/domain';
+import { switchScene } from '@src/scenes';
 
 export const addDeliveryAddressScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.AddDeliveryAddress
@@ -18,7 +19,8 @@ addDeliveryAddressScene.on('text', async (ctx: IBotContext) => {
     setDeliveryAddress(ctx.message.text);
   }
 
-  return ctx.scene.enter(
+  switchScene(
+    ctx,
     isFilledOrder ? ScenesNames.OrderConfirmation : ScenesNames.AddCarInfoScene
   );
 });

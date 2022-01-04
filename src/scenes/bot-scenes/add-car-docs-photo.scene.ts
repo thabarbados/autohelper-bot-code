@@ -8,6 +8,7 @@ import {
   CHAT_ACTION_DURATION_IN_SECONDS,
   MILLISECONDS_IN_SECOND,
   NANOSECONDS_IN_SECOND,
+  switchScene,
 } from '@src/scenes';
 
 export const addCarDocsPhotoScene = new Scenes.BaseScene<IBotContext>(
@@ -54,7 +55,8 @@ addCarDocsPhotoScene.on('photo', async (ctx: IBotContext) => {
     ) {
       setCarDocsPhotoLoadingStatus(true);
 
-      await ctx.scene.enter(
+      await switchScene(
+        ctx,
         isFilledOrder
           ? ScenesNames.OrderConfirmation
           : ScenesNames.ChooseOrderQuality

@@ -8,6 +8,7 @@ import {
   CHAT_ACTION_DURATION_IN_SECONDS,
   MILLISECONDS_IN_SECOND,
   NANOSECONDS_IN_SECOND,
+  switchScene,
 } from '@src/scenes';
 
 export const addOrderPhotoDescriptionScene = new Scenes.BaseScene<IBotContext>(
@@ -53,7 +54,8 @@ addOrderPhotoDescriptionScene.on('photo', async (ctx: IBotContext) => {
       ) {
         setOrderPhotoLoadingStatus(true);
 
-        await ctx.scene.enter(
+        await switchScene(
+          ctx,
           isFilledOrder
             ? ScenesNames.OrderConfirmation
             : ScenesNames.ChooseDeliveryType

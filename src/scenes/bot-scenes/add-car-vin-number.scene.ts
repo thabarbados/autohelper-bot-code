@@ -2,6 +2,7 @@ import { Markup, Scenes } from 'telegraf';
 
 import { botTexts, ScenesNames } from '@src/configs';
 import { IBotContext } from '@src/domain';
+import { switchScene } from '@src/scenes';
 
 export const addCarVinNumberScene = new Scenes.BaseScene<IBotContext>(
   ScenesNames.AddCarVinNumber
@@ -18,7 +19,8 @@ addCarVinNumberScene.on('text', async (ctx: IBotContext) => {
     setCarVinNumber(ctx.message.text);
   }
 
-  return ctx.scene.enter(
+  switchScene(
+    ctx,
     isFilledOrder
       ? ScenesNames.OrderConfirmation
       : ScenesNames.ChooseOrderQuality
