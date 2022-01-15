@@ -1,4 +1,5 @@
 import { IOrderModule } from '@src/domain';
+import { confirmOrderTexts } from '@src/configs';
 
 export const getOrderText = (
   orderData: IOrderModule,
@@ -19,29 +20,39 @@ export const getOrderText = (
 
   return `${
     returnType === 'textWithUserInfo'
-      ? `🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗\n<strong>Внимание, поступил новый заказ.</strong>\n<strong>Заказ сделал</strong> ${
-          userName?.length > 0 ? userName : 'пользователь'
+      ? `🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗\n<strong>${
+          confirmOrderTexts.newOrderPreview
+        }.</strong>\n<strong>${confirmOrderTexts.customerPreview}</strong> ${
+          userName?.length > 0 ? userName : confirmOrderTexts.userPreview
         }${
           userNickname?.length > 0
-            ? `, его аккаунт в телеграме: @${userNickname}.`
+            ? `, ${confirmOrderTexts.userTgIdPreview}: @${userNickname}.`
             : ''
-        }\n<strong>ID чата</strong>: ${userChatId}.\n`
+        }\n<strong>${
+          confirmOrderTexts.chatIdPreview
+        }</strong>: ${userChatId}.\n`
       : ''
   }${
     orderTextDescription?.length > 0
-      ? `<strong>Описание запчасти</strong>: ${orderTextDescription}.\n`
+      ? `<strong>${confirmOrderTexts.partDescriptionPreview}</strong>: ${orderTextDescription}.\n`
       : ''
-  }${`<strong>Тип доставки</strong>: ${deliveryType}. ${
+  }${`<strong>${
+    confirmOrderTexts.orderTypePreview
+  }</strong>: ${deliveryType}. ${
     deliveryAddress?.length > 0
-      ? `Доставку нужно осуществить по адресу: ${deliveryAddress}`
+      ? `${confirmOrderTexts.orderAddressPreview}: ${deliveryAddress}`
       : ''
   }`}\n${
     carVinNumber?.length > 0
-      ? `<strong>VIN номер автомобиля</strong>: ${carVinNumber}.\n`
+      ? `<strong>${confirmOrderTexts.carIdPreview}</strong>: ${carVinNumber}.\n`
       : ''
   }${
     carDescription?.length > 0
-      ? `<strong>Дополнительная информация о автомобиле</strong>: ${carDescription}.\n`
+      ? `<strong>${confirmOrderTexts.carAdditionalInfoPreview}</strong>: ${carDescription}.\n`
       : ''
-  }<strong>Качество запчасти</strong>: ${orderQuality}.\n<strong>Срочность заказа</strong>: ${orderUrgency}.`;
+  }<strong>${
+    confirmOrderTexts.partQualityPreview
+  }</strong>: ${orderQuality}.\n<strong>${
+    confirmOrderTexts.orderUrgencyPreview
+  }</strong>: ${orderUrgency}.`;
 };
