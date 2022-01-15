@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "esModuleInterop": true,
     "target": "es2020",
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist",
+    "outDir": "out-tsc",
     "baseUrl": "./",
     "resolveJsonModule": true,
     "noUnusedLocals": true,
@@ -22,5 +22,11 @@
   },
   "include": [
     "src/**/*.ts",
-  ]
+    "settings/bot-settings.ts",
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
 }
